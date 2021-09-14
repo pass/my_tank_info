@@ -4,12 +4,11 @@
 require "bundler/setup"
 require "my_tank_info"
 
-# You can add fixtures and/or initialization code here to make experimenting
-# with your gem easier. You can also use a different console, if you like.
+client = MyTankInfo::Client.new(api_key: ENV["MYTANKINFO_API_KEY"])
 
-# (If you use this, don't forget to add pry to your Gemfile!)
-# require "pry"
-# Pry.start
+puts
+puts "We've created a 'client' variable as a MyTankInfo::Client using ENV['MYTANKINFO_API_KEY'] as the API key."
+puts
 
 require "irb"
 IRB.start(__FILE__)
