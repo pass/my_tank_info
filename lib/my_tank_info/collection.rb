@@ -2,10 +2,15 @@
 
 module MyTankInfo
   class Collection
-    attr_reader :data
+    attr_reader :data, :size
 
     def self.from_response(response, type:, filter_attribute: nil, filter_value: nil)
-      body = response.body
+      body =
+        if response.body.instance_of?(Hash)
+          [response.body]
+        else
+          response.body
+        end
 
       @collection = new(
         data: body.map { |attrs| type.new(attrs) },
@@ -21,6 +26,8 @@ module MyTankInfo
         else
           data
         end
+
+      @size = @data.size
     end
   end
 end

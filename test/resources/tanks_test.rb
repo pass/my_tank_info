@@ -26,7 +26,7 @@ class TanksResourceTest < Minitest::Test
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    tanks = client.tanks.list(site_id: TEST_SITE_ID)
+    tanks = client.tanks.list(site_id: SITE_ID)
 
     assert_equal MyTankInfo::Collection, tanks.class
     assert_equal 6, tanks.data.size

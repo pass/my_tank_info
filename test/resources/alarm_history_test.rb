@@ -21,12 +21,12 @@ class AlarmHistoryResourceTest < Minitest::Test
   def test_site_list
     stub =
       stub_request(
-        "api/sites/#{TEST_SITE_ID}/alarmhistory",
+        "api/sites/#{SITE_ID}/alarmhistory",
         response: stub_response(fixture: "alarm_history/site_list")
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    alarm_history = client.alarm_history.list(site_id: TEST_SITE_ID)
+    alarm_history = client.alarm_history.list(site_id: SITE_ID)
 
     assert_equal MyTankInfo::Collection, alarm_history.class
     assert_equal 16, alarm_history.data.size

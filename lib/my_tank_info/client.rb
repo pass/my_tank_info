@@ -18,14 +18,6 @@ module MyTankInfo
       EnvironmentalSitegroupsResource.new(self)
     end
 
-    def inventory_sitegroups
-      InventorySitegroupsResource.new(self)
-    end
-
-    def tanks
-      TanksResource.new(self)
-    end
-
     def active_alarms
       ActiveAlarmsResource.new(self)
     end
@@ -48,6 +40,34 @@ module MyTankInfo
 
     def sensor_status_results
       SensorStatusResultsResource.new(self)
+    end
+
+    def inventory_sitegroups
+      InventorySitegroupsResource.new(self)
+    end
+
+    def tanks
+      TanksResource.new(self)
+    end
+
+    def sitegroup_inventory_dashboards
+      SitegroupInventoryDashboardsResource.new(self)
+    end
+
+    def tank_daily_usage
+      TankDailyUsageResource.new(self)
+    end
+
+    def tank_deliveries
+      TankDeliveriesResource.new(self)
+    end
+
+    def tank_inventory
+      TankInventoryResource.new(self)
+    end
+
+    def tank_runout
+      TankRunoutResource.new(self)
     end
 
     def connection

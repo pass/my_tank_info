@@ -26,7 +26,7 @@ class ActiveAlarmsResourceTest < Minitest::Test
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    active_alarms = client.active_alarms.list(site_id: TEST_SITE_ID)
+    active_alarms = client.active_alarms.list(site_id: SITE_ID)
 
     assert_equal MyTankInfo::Collection, active_alarms.class
     assert_equal 1, active_alarms.data.size

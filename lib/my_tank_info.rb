@@ -19,13 +19,26 @@ module MyTankInfo
   autoload :CsldResult, "my_tank_info/objects/csld_result"
   autoload :SensorStatusResult, "my_tank_info/objects/sensor_status_result"
 
-  autoload :EnvironmentalSitegroupsResource, "my_tank_info/resources/environmental_sitegroups"
-  autoload :InventorySitegroupsResource, "my_tank_info/resources/inventory_sitegroups"
-  autoload :TanksResource, "my_tank_info/resources/tanks"
+  autoload :SitegroupInventoryDashboard, "my_tank_info/objects/sitegroup_inventory_dashboard"
+  autoload :TankDailyUsageRecord, "my_tank_info/objects/tank_daily_usage_record"
+  autoload :TankDeliveryRecord, "my_tank_info/objects/tank_delivery_record"
+  autoload :TankInventoryRecord, "my_tank_info/objects/tank_inventory_record"
+  autoload :TankRunoutRecord, "my_tank_info/objects/tank_runout_record"
+
   autoload :ActiveAlarmsResource, "my_tank_info/resources/active_alarms"
   autoload :AlarmHistoryResource, "my_tank_info/resources/alarm_history"
+
+  autoload :EnvironmentalSitegroupsResource, "my_tank_info/resources/environmental_sitegroups"
   autoload :TankLeakResultsResource, "my_tank_info/resources/tank_leak_results"
   autoload :LineLeakResultsResource, "my_tank_info/resources/line_leak_results"
   autoload :CsldResultsResource, "my_tank_info/resources/csld_results"
   autoload :SensorStatusResultsResource, "my_tank_info/resources/sensor_status_results"
+
+  autoload :InventorySitegroupsResource, "my_tank_info/resources/inventory_sitegroups"
+  autoload :SitegroupInventoryDashboardsResource, "my_tank_info/resources/sitegroup_inventory_dashboards"
+  autoload :TanksResource, "my_tank_info/resources/tanks"
+  autoload :TankDailyUsageResource, "my_tank_info/resources/tank_daily_usage"
+  autoload :TankDeliveriesResource, "my_tank_info/resources/tank_deliveries"
+  autoload :TankInventoryResource, "my_tank_info/resources/tank_inventory"
+  autoload :TankRunoutResource, "my_tank_info/resources/tank_runout"
 end
