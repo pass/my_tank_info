@@ -14,7 +14,7 @@ class AlarmHistoryResourceTest < Minitest::Test
     alarm_history = client.alarm_history.list
 
     assert_equal MyTankInfo::Collection, alarm_history.class
-    assert_equal 22, alarm_history.data.size
+    assert_equal 22, alarm_history.size
     assert_equal MyTankInfo::Alarm, alarm_history.data.first.class
   end
 
@@ -29,7 +29,7 @@ class AlarmHistoryResourceTest < Minitest::Test
     alarm_history = client.alarm_history.list(site_id: SITE_ID)
 
     assert_equal MyTankInfo::Collection, alarm_history.class
-    assert_equal 16, alarm_history.data.size
+    assert_equal 16, alarm_history.size
     assert_equal MyTankInfo::Alarm, alarm_history.data.first.class
   end
 end

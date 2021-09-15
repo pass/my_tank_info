@@ -14,7 +14,7 @@ class TanksResourceTest < Minitest::Test
     tanks = client.tanks.list
 
     assert_equal MyTankInfo::Collection, tanks.class
-    assert_equal 27, tanks.data.size
+    assert_equal 27, tanks.size
     assert_equal MyTankInfo::Tank, tanks.data.first.class
   end
 
@@ -29,7 +29,7 @@ class TanksResourceTest < Minitest::Test
     tanks = client.tanks.list(site_id: SITE_ID)
 
     assert_equal MyTankInfo::Collection, tanks.class
-    assert_equal 6, tanks.data.size
+    assert_equal 6, tanks.size
     assert_equal MyTankInfo::Tank, tanks.data.first.class
   end
 end

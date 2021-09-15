@@ -14,7 +14,7 @@ class ActiveAlarmsResourceTest < Minitest::Test
     active_alarms = client.active_alarms.list
 
     assert_equal MyTankInfo::Collection, active_alarms.class
-    assert_equal 2, active_alarms.data.size
+    assert_equal 2, active_alarms.size
     assert_equal MyTankInfo::Alarm, active_alarms.data.first.class
   end
 
@@ -29,7 +29,7 @@ class ActiveAlarmsResourceTest < Minitest::Test
     active_alarms = client.active_alarms.list(site_id: SITE_ID)
 
     assert_equal MyTankInfo::Collection, active_alarms.class
-    assert_equal 1, active_alarms.data.size
+    assert_equal 1, active_alarms.size
     assert_equal MyTankInfo::Alarm, active_alarms.data.first.class
   end
 end

@@ -3,6 +3,8 @@
 require_relative "my_tank_info/version"
 
 module MyTankInfo
+  MYTI_DATE_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S%:z"
+
   autoload :Client, "my_tank_info/client"
   autoload :Object, "my_tank_info/object"
   autoload :Resource, "my_tank_info/resource"
@@ -25,6 +27,8 @@ module MyTankInfo
   autoload :TankInventoryRecord, "my_tank_info/objects/tank_inventory_record"
   autoload :TankRunoutRecord, "my_tank_info/objects/tank_runout_record"
 
+  autoload :TankReconciliationRecord, "my_tank_info/objects/tank_reconciliation_record"
+
   autoload :ActiveAlarmsResource, "my_tank_info/resources/active_alarms"
   autoload :AlarmHistoryResource, "my_tank_info/resources/alarm_history"
 
@@ -33,6 +37,8 @@ module MyTankInfo
   autoload :LineLeakResultsResource, "my_tank_info/resources/line_leak_results"
   autoload :CsldResultsResource, "my_tank_info/resources/csld_results"
   autoload :SensorStatusResultsResource, "my_tank_info/resources/sensor_status_results"
+
+  autoload :TankReconciliationRecordsResource, "my_tank_info/resources/tank_reconciliation_records"
 
   autoload :InventorySitegroupsResource, "my_tank_info/resources/inventory_sitegroups"
   autoload :SitegroupInventoryDashboardsResource, "my_tank_info/resources/sitegroup_inventory_dashboards"
