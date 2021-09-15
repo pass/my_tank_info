@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 module MyTankInfo
-  class TanksResource < Resource
-    def list(site_id: nil)
-      response = get("api/tanks")
+  class ActiveAlarmsResource < Resource
+    def list(site_id: nil, **params)
+      response = get("api/alarms", params: params)
 
       if site_id.nil?
-        Collection.from_response(response, type: Tank)
+        Collection.from_response(response, type: Alarm)
       else
         Collection.from_response(
           response,
-          type: Tank,
+          type: Alarm,
           filter_attribute: :site_id,
           filter_value: site_id
         )

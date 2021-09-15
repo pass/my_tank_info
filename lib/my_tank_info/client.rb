@@ -8,21 +8,30 @@ module MyTankInfo
     BASE_URL = "https://app.mytankinfo.com"
     attr_reader :api_key
 
-    def initialize(api_key:, adapter: Faraday.default_adapter)
+    def initialize(api_key:, adapter: Faraday.default_adapter, stubs: nil)
       @api_key = api_key
       @adapter = adapter
+      @stubs = stubs
     end
 
-    def sitegroups
-      SitegroupsResource.new(self)
+    def environmental_sitegroups
+      EnvironmentalSitegroupsResource.new(self)
+    end
+
+    def inventory_sitegroups
+      InventorySitegroupsResource.new(self)
     end
 
     def tanks
       TanksResource.new(self)
     end
 
-    def alarms
-      AlarmsResource.new(self)
+    def active_alarms
+      ActiveAlarmsResource.new(self)
+    end
+
+    def alarm_history
+      AlarmHistoryResource.new(self)
     end
 
     def tank_leak_results
@@ -30,7 +39,7 @@ module MyTankInfo
     end
 
     def line_leak_results
-      TankLeakResultsResource.new(self)
+      LineLeakResultsResource.new(self)
     end
 
     def csld_results
@@ -46,7 +55,7 @@ module MyTankInfo
         conn.url_prefix = BASE_URL
         conn.request :json
         conn.response :json, content_type: "application/json"
-        conn.adapter @adapter
+        conn.adapter @adapter, @stubs
       end
     end
   end

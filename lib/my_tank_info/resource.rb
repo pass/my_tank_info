@@ -36,6 +36,7 @@ module MyTankInfo
 
     def handle_response(response)
       message = response.reason_phrase
+
       case response.status
       when 400
         raise Error, message

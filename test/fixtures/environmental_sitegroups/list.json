@@ -1,0 +1,44 @@
+[
+  {
+    "sites": [
+      {
+        "id": 1843,
+        "name": "Appliance Test",
+        "site_group_id": 73,
+        "time_zone": "America/Chicago"
+      },
+      {
+        "id": 1489,
+        "name": "Butler Tarkington - Sta 31",
+        "site_group_id": 73,
+        "time_zone": "America/Chicago"
+      },
+      {
+        "id": 1491,
+        "name": "Houston TX-8",
+        "site_group_id": 73,
+        "time_zone": "America/New_York"
+      },
+      {
+        "id": 1490,
+        "name": "Lachescter VA-9",
+        "site_group_id": 73,
+        "time_zone": "America/New_York"
+      },
+      {
+        "id": 1493,
+        "name": "Plainfield IL-12",
+        "site_group_id": 73,
+        "time_zone": "America/New_York"
+      },
+      {
+        "id": 1492,
+        "name": "Prester VA-15",
+        "site_group_id": 73,
+        "time_zone": "America/New_York"
+      }
+    ],
+    "id": 73,
+    "name": "Acme Group Locations"
+  }
+]
