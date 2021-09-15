@@ -3,7 +3,7 @@
 module MyTankInfo
   class TanksResource < Resource
     def list(site_id: nil)
-      response = get("api/tanks")
+      response = get_request("api/tanks")
 
       if site_id.nil?
         Collection.from_response(response, type: Tank)

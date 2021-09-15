@@ -3,7 +3,7 @@
 module MyTankInfo
   class ActiveAlarmsResource < Resource
     def list(site_id: nil, **params)
-      response = get("api/alarms", params: params)
+      response = get_request("api/alarms", params: params)
 
       if site_id.nil?
         Collection.from_response(response, type: Alarm)

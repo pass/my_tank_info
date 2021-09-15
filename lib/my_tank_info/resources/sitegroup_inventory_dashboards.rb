@@ -4,7 +4,7 @@ module MyTankInfo
   class SitegroupInventoryDashboardsResource < Resource
     def list(sitegroup_id:)
       Collection.from_response(
-        get("api/sitegroups/#{sitegroup_id}/inventory/dashboard"),
+        get_request("api/sitegroups/#{sitegroup_id}/inventory/dashboard"),
         type: SitegroupInventoryDashboard
       )
     end

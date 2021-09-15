@@ -3,7 +3,7 @@
 module MyTankInfo
   class InventorySitegroupsResource < Resource
     def list(environmental: true)
-      Collection.from_response(get("api/sitegroups"), type: InventorySitegroup)
+      Collection.from_response(get_request("api/sitegroups"), type: InventorySitegroup)
     end
   end
 end

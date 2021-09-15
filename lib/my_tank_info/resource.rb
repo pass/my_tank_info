@@ -8,19 +8,19 @@ module MyTankInfo
       @client = client
     end
 
-    def get(url, params: {}, headers: {})
+    def get_request(url, params: {}, headers: {})
       handle_response client.connection.get(url, params, default_headers.merge(headers))
     end
 
-    def post(url, body:, headers: {})
+    def post_request(url, body:, headers: {})
       handle_response client.connection.post(url, body, default_headers.merge(headers))
     end
 
-    def patch(url, body:, headers: {})
+    def patch_request(url, body:, headers: {})
       handle_response client.connection.patch(url, body, default_headers.merge(headers))
     end
 
-    def put(url, body:, headers: {})
+    def put_request(url, body:, headers: {})
       handle_response client.connection.put(url, body, default_headers.merge(headers))
     end
 
