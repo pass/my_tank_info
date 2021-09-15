@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1843,
+    "siteGroupName": "Acme Group Locations",
+    "name": "Appliance Test",
+    "isDefaultContact": false
+  },
+  {
+    "id": 1489,
+    "siteGroupName": "Acme Group Locations",
+    "name": "Butler Tarkington - Sta 31",
+    "isDefaultContact": false
+  },
+  {
+    "id": 1491,
+    "siteGroupName": "Acme Group Locations",
+    "name": "Houston TX-8",
+    "isDefaultContact": false
+  },
+  {
+    "id": 1490,
+    "siteGroupName": "Acme Group Locations",
+    "name": "Lachescter VA-9",
+    "isDefaultContact": false
+  },
+  {
+    "id": 1493,
+    "siteGroupName": "Acme Group Locations",
+    "name": "Plainfield IL-12",
+    "isDefaultContact": false
+  },
+  {
+    "id": 1492,
+    "siteGroupName": "Acme Group Locations",
+    "name": "Prester VA-15",
+    "isDefaultContact": false
+  }
+]

@@ -74,6 +74,10 @@ module MyTankInfo
       TankReconciliationRecordsResource.new(self)
     end
 
+    def notification_contacts
+      NotificationContactsResource.new(self)
+    end
+
     def connection
       @connection ||= Faraday.new do |conn|
         conn.url_prefix = BASE_URL

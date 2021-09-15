@@ -12,6 +12,7 @@ class Minitest::Test
   SITE_ID = 1489
   TANK_ID = 1770
   SITEGROUP_ID = 73
+  CONTACT_ID = 306
 
   def stub_response(fixture: nil, status: 200, headers: {"Content-Type" => "application/json"})
     [status, headers, File.read("test/fixtures/#{fixture}.json")]

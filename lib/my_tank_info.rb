@@ -29,6 +29,9 @@ module MyTankInfo
 
   autoload :TankReconciliationRecord, "my_tank_info/objects/tank_reconciliation_record"
 
+  autoload :NotificationContact, "my_tank_info/objects/notification_contact"
+  autoload :NotificationSite, "my_tank_info/objects/notification_site"
+
   autoload :ActiveAlarmsResource, "my_tank_info/resources/active_alarms"
   autoload :AlarmHistoryResource, "my_tank_info/resources/alarm_history"
 
@@ -47,4 +50,6 @@ module MyTankInfo
   autoload :TankDeliveriesResource, "my_tank_info/resources/tank_deliveries"
   autoload :TankInventoryResource, "my_tank_info/resources/tank_inventory"
   autoload :TankRunoutResource, "my_tank_info/resources/tank_runout"
+
+  autoload :NotificationContactsResource, "my_tank_info/resources/notification_contacts"
 end

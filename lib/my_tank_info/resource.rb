@@ -12,19 +12,19 @@ module MyTankInfo
       handle_response client.connection.get(url, params, default_headers.merge(headers))
     end
 
-    def post(url, data:, headers: {})
-      handle_response client.connection.post(url, params, default_headers.merge(headers))
+    def post(url, body:, headers: {})
+      handle_response client.connection.post(url, body, default_headers.merge(headers))
     end
 
-    def patch(url, data:, headers: {})
-      handle_response client.connection.patch(url, params, default_headers.merge(headers))
+    def patch(url, body:, headers: {})
+      handle_response client.connection.patch(url, body, default_headers.merge(headers))
     end
 
-    def put(url, data:, headers: {})
-      handle_response client.connection.put(url, params, default_headers.merge(headers))
+    def put(url, body:, headers: {})
+      handle_response client.connection.put(url, body, default_headers.merge(headers))
     end
 
-    def delete(url, params: {}, headers: {})
+    def delete_request(url, params: {}, headers: {})
       handle_response client.connection.delete(url, params, default_headers.merge(headers))
     end
 

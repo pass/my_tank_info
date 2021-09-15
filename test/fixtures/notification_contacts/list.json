@@ -1,0 +1,24 @@
+[
+  {
+    "id": 306,
+    "first_name": "Kyle",
+    "last_name": "Keesling",
+    "full_name": "Kyle Keesling",
+    "sms_phone": "555-555-5555",
+    "email": "kyle@example.com",
+    "default_contact_settings": 1,
+    "contact_method": 3,
+    "is_active": true
+  },
+  {
+    "id": 269,
+    "first_name": "Mike",
+    "last_name": "Buck",
+    "full_name": "Mike Buck",
+    "sms_phone": "555-555-5555",
+    "email": "mike@example.com",
+    "default_contact_settings": 0,
+    "contact_method": 1,
+    "is_active": true
+  }
+]
