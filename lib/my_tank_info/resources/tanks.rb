@@ -17,7 +17,7 @@ module MyTankInfo
       end
     end
 
-    def retrieve(tank_id: nil)
+    def retrieve(tank_id:)
       Tank.new get_request("api/tanks/#{tank_id}").body
     end
   end
