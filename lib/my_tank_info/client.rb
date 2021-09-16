@@ -26,6 +26,10 @@ module MyTankInfo
       AlarmHistoryResource.new(self)
     end
 
+    def alarm_history_notes
+      AlarmHistoryNotesResource.new(self)
+    end
+
     def tank_leak_results
       TankLeakResultsResource.new(self)
     end

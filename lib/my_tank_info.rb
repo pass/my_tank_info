@@ -18,6 +18,7 @@ module MyTankInfo
   autoload :Site, "my_tank_info/objects/site"
   autoload :Tank, "my_tank_info/objects/tank"
   autoload :Alarm, "my_tank_info/objects/alarm"
+  autoload :AlarmNote, "my_tank_info/objects/alarm_note"
   autoload :TankLeakResult, "my_tank_info/objects/tank_leak_result"
   autoload :LineLeakResult, "my_tank_info/objects/line_leak_result"
   autoload :CsldResult, "my_tank_info/objects/csld_result"
@@ -40,6 +41,7 @@ module MyTankInfo
 
   autoload :ActiveAlarmsResource, "my_tank_info/resources/active_alarms"
   autoload :AlarmHistoryResource, "my_tank_info/resources/alarm_history"
+  autoload :AlarmHistoryNotesResource, "my_tank_info/resources/alarm_history_notes"
 
   autoload :EnvironmentalSitegroupsResource, "my_tank_info/resources/environmental_sitegroups"
   autoload :TankLeakResultsResource, "my_tank_info/resources/tank_leak_results"
