@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class AlarmHistoryNotesResourceTest < Minitest::Test
+class AlarmNotesResourceTest < Minitest::Test
   def test_list
     stub =
       stub_request(
@@ -11,7 +11,7 @@ class AlarmHistoryNotesResourceTest < Minitest::Test
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    alarm_notes = client.alarm_history_notes.list(alarm_id: ALARM_ID)
+    alarm_notes = client.alarm_notes.list(alarm_id: ALARM_ID)
 
     assert_equal MyTankInfo::Collection, alarm_notes.class
     assert_equal MyTankInfo::AlarmNote, alarm_notes.data.first.class
@@ -31,7 +31,7 @@ class AlarmHistoryNotesResourceTest < Minitest::Test
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    contact = client.alarm_history_notes.create(alarm_id: ALARM_ID, **body)
+    contact = client.alarm_notes.create(alarm_id: ALARM_ID, **body)
 
     assert_equal MyTankInfo::AlarmNote, contact.class
   end
@@ -45,6 +45,6 @@ class AlarmHistoryNotesResourceTest < Minitest::Test
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    assert client.alarm_history_notes.delete(alarm_id: ALARM_ID, note_id: ALARM_NOTE_ID)
+    assert client.alarm_notes.delete(alarm_id: ALARM_ID, note_id: ALARM_NOTE_ID)
   end
 end

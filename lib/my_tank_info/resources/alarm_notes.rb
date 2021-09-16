@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module MyTankInfo
-  class AlarmHistoryNotesResource < Resource
+  class AlarmNotesResource < Resource
     def list(alarm_id:, **params)
       response = get_request("api/alarmhistory/#{alarm_id}/notes", params: params)
       Collection.from_response(response, type: AlarmNote)
