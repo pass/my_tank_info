@@ -1,0 +1,92 @@
+[
+  {
+    "id": 14097,
+    "tank_id": 1770,
+    "name": "Tank High Level",
+    "threshold_name": "gal",
+    "threshold_value": "9394",
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14098,
+    "tank_id": 1770,
+    "name": "Tank Low Level",
+    "threshold_name": "gal",
+    "threshold_value": "1000",
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14099,
+    "tank_id": 1770,
+    "name": "Tank Overfill",
+    "threshold_name": "gal",
+    "threshold_value": "8900",
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14100,
+    "tank_id": 1770,
+    "name": "Tank Reorder",
+    "threshold_name": "gal",
+    "threshold_value": "989",
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14101,
+    "tank_id": 1770,
+    "name": "Tank Runout Alarm",
+    "threshold_name": "hours",
+    "threshold_value": "6",
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14102,
+    "tank_id": 1770,
+    "name": "Tank Runout Warning",
+    "threshold_name": "hours",
+    "threshold_value": "24",
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14103,
+    "tank_id": 1770,
+    "name": "Tank Water Alarm",
+    "threshold_name": "in",
+    "threshold_value": "1.5",
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14104,
+    "tank_id": 1770,
+    "name": "Tank Water Warning",
+    "threshold_name": "in",
+    "threshold_value": "1.0",
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 17653,
+    "tank_id": 1770,
+    "name": "Delivery Recieved Notification",
+    "threshold_name": "notification",
+    "threshold_value": 0,
+    "threshold_is_editable": false,
+    "is_active": false
+  },
+  {
+    "id": 100000000000,
+    "tank_id": 1770,
+    "name": "Tank Runout Level",
+    "threshold_name": "gal",
+    "is_active": true,
+    "threshold_value": "741",
+    "threshold_is_editable": true
+  }
+]

@@ -1,0 +1,83 @@
+[
+  {
+    "id": 14217,
+    "tank_id": 1770,
+    "name": "Tank High Level",
+    "threshold_name": "gal",
+    "threshold_value": 3800,
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14218,
+    "tank_id": 1770,
+    "name": "Tank Low Level",
+    "threshold_name": "gal",
+    "threshold_value": 500,
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14219,
+    "tank_id": 1770,
+    "name": "Tank Overfill",
+    "threshold_name": "gal",
+    "threshold_value": 3600,
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14220,
+    "tank_id": 1770,
+    "name": "Tank Reorder",
+    "threshold_name": "gal",
+    "threshold_value": 400,
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14221,
+    "tank_id": 1770,
+    "name": "Tank Runout Alarm",
+    "threshold_name": "hours",
+    "threshold_value": 6,
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14222,
+    "tank_id": 1770,
+    "name": "Tank Runout Warning",
+    "threshold_name": "hours",
+    "threshold_value": 24,
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14223,
+    "tank_id": 1770,
+    "name": "Tank Water Alarm",
+    "threshold_name": "in",
+    "threshold_value": 3,
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 14224,
+    "tank_id": 1770,
+    "name": "Tank Water Warning",
+    "threshold_name": "in",
+    "threshold_value": 2,
+    "threshold_is_editable": true,
+    "is_active": false
+  },
+  {
+    "id": 17668,
+    "tank_id": 1770,
+    "name": "Delivery Recieved Notification",
+    "threshold_name": "notification",
+    "threshold_value": 0,
+    "threshold_is_editable": false,
+    "is_active": false
+  }
+]

@@ -28,6 +28,7 @@ module MyTankInfo
   autoload :TankDeliveryRecord, "my_tank_info/objects/tank_delivery_record"
   autoload :TankInventoryRecord, "my_tank_info/objects/tank_inventory_record"
   autoload :TankRunoutRecord, "my_tank_info/objects/tank_runout_record"
+  autoload :TankRule, "my_tank_info/objects/tank_rule"
 
   autoload :TankReconciliationRecord, "my_tank_info/objects/tank_reconciliation_record"
 
@@ -55,6 +56,7 @@ module MyTankInfo
   autoload :TankDeliveriesResource, "my_tank_info/resources/tank_deliveries"
   autoload :TankInventoryResource, "my_tank_info/resources/tank_inventory"
   autoload :TankRunoutResource, "my_tank_info/resources/tank_runout"
+  autoload :TankRulesResource, "my_tank_info/resources/tank_rules"
 
   autoload :NotificationContactsResource, "my_tank_info/resources/notification_contacts"
   autoload :NotificationRulesResource, "my_tank_info/resources/notification_rules"

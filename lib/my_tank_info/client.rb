@@ -70,6 +70,10 @@ module MyTankInfo
       TankRunoutResource.new(self)
     end
 
+    def tank_rules
+      TankRulesResource.new(self)
+    end
+
     def tank_reconciliation_records
       TankReconciliationRecordsResource.new(self)
     end
