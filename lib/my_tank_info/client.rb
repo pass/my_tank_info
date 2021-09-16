@@ -82,6 +82,10 @@ module MyTankInfo
       NotificationRulesResource.new(self)
     end
 
+    def generate_api_token(username:, password:)
+      TokensResource.new(self).generate(username: username, password: password)
+    end
+
     def connection
       @connection ||= Faraday.new do |conn|
         conn.url_prefix = BASE_URL

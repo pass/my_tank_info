@@ -35,7 +35,7 @@ module MyTankInfo
     end
 
     def handle_response(response)
-      message = response.body&.first
+      message = response.body
 
       case response.status
       when 400

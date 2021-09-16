@@ -56,4 +56,6 @@ module MyTankInfo
 
   autoload :NotificationContactsResource, "my_tank_info/resources/notification_contacts"
   autoload :NotificationRulesResource, "my_tank_info/resources/notification_rules"
+
+  autoload :TokensResource, "my_tank_info/resources/tokens"
 end
