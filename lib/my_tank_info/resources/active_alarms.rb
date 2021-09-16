@@ -17,6 +17,11 @@ module MyTankInfo
       end
     end
 
+    def list_notes(alarm_id:)
+      response = get_request("api/alarms/#{alarm_id}/notes")
+      Collection.from_response(response, type: AlarmNote)
+    end
+
     def retrieve(alarm_id:)
       Alarm.new get_request("api/alarms/#{alarm_id}").body
     end

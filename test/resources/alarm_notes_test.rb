@@ -3,20 +3,6 @@
 require "test_helper"
 
 class AlarmNotesResourceTest < Minitest::Test
-  def test_list
-    stub =
-      stub_request(
-        "/api/alarmhistory/#{ALARM_ID}/notes",
-        response: stub_response(fixture: "alarm_notes/list")
-      )
-
-    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    alarm_notes = client.alarm_notes.list(alarm_id: ALARM_ID)
-
-    assert_equal MyTankInfo::Collection, alarm_notes.class
-    assert_equal MyTankInfo::AlarmNote, alarm_notes.data.first.class
-  end
-
   def test_create
     body = {
       note: "Test Note"

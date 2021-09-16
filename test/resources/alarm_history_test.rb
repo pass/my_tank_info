@@ -33,6 +33,21 @@ class AlarmHistoryResourceTest < Minitest::Test
     assert_equal MyTankInfo::Alarm, alarm_history.data.first.class
   end
 
+  def test_list_notes
+    stub =
+      stub_request(
+        "/api/alarmhistory/#{ALARM_ID}/notes",
+        response: stub_response(fixture: "alarm_history/list_notes")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    active_alarms = client.alarm_history.list_notes(alarm_id: ALARM_ID)
+
+    assert_equal MyTankInfo::Collection, active_alarms.class
+    assert_equal 2, active_alarms.size
+    assert_equal MyTankInfo::AlarmNote, active_alarms.data.first.class
+  end
+
   def test_retrieve
     stub =
       stub_request(
