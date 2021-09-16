@@ -32,4 +32,17 @@ class TanksResourceTest < Minitest::Test
     assert_equal 6, tanks.size
     assert_equal MyTankInfo::Tank, tanks.data.first.class
   end
+
+  def test_retrieve
+    stub =
+      stub_request(
+        "api/tanks/#{TANK_ID}",
+        response: stub_response(fixture: "tanks/retrieve")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    contact = client.tanks.retrieve(tank_id: TANK_ID)
+
+    assert_equal MyTankInfo::Tank, contact.class
+  end
 end
