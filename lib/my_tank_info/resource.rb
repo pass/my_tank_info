@@ -30,6 +30,16 @@ module MyTankInfo
 
     private
 
+    def enforce_required_attributes(required_attrs:, attrs:)
+      attr_keys = attrs.keys
+      required_attrs_present = required_attrs.all? { |req_attr| attr_keys.include?(req_attr) }
+
+      unless required_attrs_present
+        error_message = "You must provide values for all required attributes: #{required_attrs.join(", ")}"
+        raise MissingRequiredAttributeError, error_message
+      end
+    end
+
     def default_headers
       {Authorization: "Bearer #{client.api_key}"}
     end

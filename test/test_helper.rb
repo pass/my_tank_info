@@ -15,6 +15,7 @@ class Minitest::Test
   CONTACT_ID = 306
   NOTIFICATION_RULE_ID = 82425
   NOTIFICATION_CODE_ID = 12
+  DELIVERY_ID = 123
 
   def stub_response(fixture:, status: 200, headers: {"Content-Type" => "application/json"})
     [status, headers, File.read("test/fixtures/#{fixture}.json")]

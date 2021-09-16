@@ -113,7 +113,7 @@ client.tank_inventory.list(tank_id: 1)
 
 # Returns recent inventory records for a tank (similiar to client.tank_deliveries.list)
 # with an extra record indicating the estimated runout.
-#
+
 # The period of time over which the records are queried varies depending on how far out in the
 # future the estimated runout is. But the results will contain inventory records from at least
 # the last two days and at most the last 28 days.
