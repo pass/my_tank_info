@@ -12,5 +12,9 @@ module MyTankInfo
 
       Collection.from_response(response, type: Alarm)
     end
+
+    def retrieve(alarm_id:)
+      Alarm.new get_request("api/alarmhistory/#{alarm_id}").body
+    end
   end
 end

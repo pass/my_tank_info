@@ -32,4 +32,17 @@ class AlarmHistoryResourceTest < Minitest::Test
     assert_equal 16, alarm_history.size
     assert_equal MyTankInfo::Alarm, alarm_history.data.first.class
   end
+
+  def test_retrieve
+    stub =
+      stub_request(
+        "api/alarmhistory/#{ALARM_ID}",
+        response: stub_response(fixture: "alarm_history/retrieve")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    contact = client.alarm_history.retrieve(alarm_id: ALARM_ID)
+
+    assert_equal MyTankInfo::Alarm, contact.class
+  end
 end

@@ -16,5 +16,9 @@ module MyTankInfo
         )
       end
     end
+
+    def retrieve(alarm_id:)
+      Alarm.new get_request("api/alarms/#{alarm_id}").body
+    end
   end
 end
