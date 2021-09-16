@@ -18,8 +18,7 @@ module MyTankInfo
     end
 
     def update(rule_id:, **attributes)
-      request = put_request("api/admin/notificationrules/#{rule_id}", body: attributes)
-      NotificationRule.new request.body
+      put_request("api/admin/notificationrules/#{rule_id}", body: attributes)
     end
 
     def delete(rule_id:)
