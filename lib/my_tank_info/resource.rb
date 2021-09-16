@@ -35,21 +35,21 @@ module MyTankInfo
     end
 
     def handle_response(response)
-      message = response.reason_phrase
+      message = response.body&.first
 
       case response.status
       when 400
-        raise Error, message
+        raise Error, "Your request was malformed - #{message}"
       when 401
-        raise Error, message
+        raise Error, "You did not supply valid authentication credentials - #{message}"
       when 403
-        raise Error, message
+        raise Error, "You are not allowed to perform that action - #{message}"
       when 404
-        raise Error, [response.status, message, "This resource could not be found"].join(" - ")
+        raise Error, "This resource could not be found"
       when 429
-        raise Error, message
+        raise Error, "Your request exceeded the API rate limit - #{message}"
       when 500
-        raise Error, message
+        raise Error, "We were unable to perform the request due to server-side problems - #{message}"
       end
 
       response

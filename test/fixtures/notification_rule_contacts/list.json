@@ -1,0 +1,29 @@
+[
+  {
+    "id": 201,
+    "first_name": "Alex",
+    "last_name": "Gordon",
+    "full_name": "Alex Gordon",
+    "contact_method": 2,
+    "is_active": false,
+    "is_applied": true
+  },
+  {
+    "id": 306,
+    "first_name": "Kyle",
+    "last_name": "Keesling",
+    "full_name": "Kyle Keesling",
+    "contact_method": 3,
+    "is_active": true,
+    "is_applied": true
+  },
+  {
+    "id": 3110,
+    "first_name": "Kyle",
+    "last_name": "Keesling",
+    "full_name": "Kyle Keesling",
+    "contact_method": 1,
+    "is_active": true,
+    "is_applied": false
+  }
+]
