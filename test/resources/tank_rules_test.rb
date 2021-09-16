@@ -30,7 +30,7 @@ class TankRulesResourceTest < Minitest::Test
 
     stub =
       stub_request(
-        "/api/tanks/#{TANK_ID}/rules/#{TANK_RULE_ID}",
+        "/api/tanks/#{TANK_ID}/rules",
         method: :put,
         body: body,
         response: stub_response(fixture: "tank_deliveries/update")
@@ -38,7 +38,8 @@ class TankRulesResourceTest < Minitest::Test
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
 
-    rule = client.tank_rules.update(tank_id: TANK_ID, rule_id: DELIVERY_ID, **body)
-    assert_equal MyTankInfo::TankRule, rule.class
+    rules = client.tank_rules.update(tank_id: TANK_ID, attributes: body)
+    assert_equal MyTankInfo::Collection, rules.class
+    assert_equal MyTankInfo::TankRule, rules.data.first.class
   end
 end

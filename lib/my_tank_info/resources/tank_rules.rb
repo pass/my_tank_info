@@ -7,8 +7,8 @@ module MyTankInfo
       Collection.from_response(response, type: TankRule)
     end
 
-    def update(tank_id:, rule_id:, **attributes)
-      request = put_request("api/tanks/#{tank_id}/rules/#{rule_id}", body: attributes)
+    def update(tank_id:, attributes:)
+      response = put_request("api/tanks/#{tank_id}/rules", body: attributes)
       Collection.from_response(response, type: TankRule)
     end
   end
