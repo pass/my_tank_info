@@ -7,29 +7,30 @@ class TankReconciliationRecordSummaryTest < Minitest::Test
     setup
 
     assert_equal MyTankInfo::TankReconciliationRecordSummary, @tank_reconciliation_summary.class
+    assert_equal "E-10", @tank.product_name
 
     assert_equal 10, @tank_reconciliation_records.size
 
-    assert_equal 1439, @tank_reconciliation_summary.total_deliveries_volume
-    assert_equal 890, @tank_reconciliation_summary.total_sales_volume
-    assert_equal(-33, @tank_reconciliation_summary.total_over_short)
-    assert_equal 33, @tank_reconciliation_summary.absolute_difference_volume
+    assert_equal 6989, @tank_reconciliation_summary.total_deliveries_volume
+    assert_equal 8437, @tank_reconciliation_summary.total_sales_volume
+    assert_equal(-18, @tank_reconciliation_summary.total_over_short)
+    assert_equal 18, @tank_reconciliation_summary.absolute_difference_volume
 
     # Monthly Values
-    assert_equal 9, @tank_reconciliation_summary.leak_check_number
-    assert_equal 139, @tank_reconciliation_summary.leak_check_result
+    assert_equal 84, @tank_reconciliation_summary.leak_check_number
+    assert_equal 214, @tank_reconciliation_summary.leak_check_result
     refute @tank_reconciliation_summary.leak_check_result_unacceptable?
 
     # Ten Day Values
-    assert_equal 3907, @tank_reconciliation_summary.allowance_multiplier
-    assert_equal 29, @tank_reconciliation_summary.allowable_tolerance
-    assert @tank_reconciliation_summary.variance_is_gt_allowable_tolerance?
+    assert_equal 9889, @tank_reconciliation_summary.allowance_multiplier
+    assert_equal 74, @tank_reconciliation_summary.allowable_tolerance
+    refute @tank_reconciliation_summary.variance_is_gt_allowable_tolerance?
 
     # Weekly Values
-    assert_equal 890, @tank_reconciliation_summary.total_gallons_pumped
-    assert_equal 3907, @tank_reconciliation_summary.weekly_number_to_check
-    assert_equal 20, @tank_reconciliation_summary.weekly_check_number
-    assert @tank_reconciliation_summary.total_gallons_larger_than_leak_check?
+    assert_equal 8437, @tank_reconciliation_summary.total_gallons_pumped
+    assert_equal 9889, @tank_reconciliation_summary.weekly_number_to_check
+    assert_equal 49, @tank_reconciliation_summary.weekly_check_number
+    refute @tank_reconciliation_summary.total_gallons_larger_than_leak_check?
   end
 
   private
