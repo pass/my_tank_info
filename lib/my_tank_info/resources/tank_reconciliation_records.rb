@@ -4,7 +4,7 @@ module MyTankInfo
   class TankReconciliationRecordsResource < Resource
     def list(site_id:, **params)
       response = get_request("api/recon/sites/#{site_id}", params: params)
-      Collection.from_response(response, type: TankReconciliationRecord)
+      TankReconciliationRecordCollection.from_response(response)
     end
 
     def retrieve(site_id:, started_at:)
@@ -18,7 +18,7 @@ module MyTankInfo
         end
 
       response = get_request("api/recon/sites/#{site_id}/#{date}")
-      Collection.from_response(response, type: TankReconciliationRecord)
+      TankReconciliationRecordCollection.from_response(response)
     end
 
     def update(site_id:, started_at:, **attributes)
