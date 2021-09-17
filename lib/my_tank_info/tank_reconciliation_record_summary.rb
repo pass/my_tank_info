@@ -8,9 +8,10 @@ module MyTankInfo
     TEN_DAY_MULTIPLIER = 0.0075
     SEVEN_DAY_MULTIPLIER = 0.005
 
-    def initialize(records, capacity:)
-      @capacity = capacity
+    def initialize(records, capacity:, reconciliation_period:)
       @records = records
+      @capacity = capacity
+      @reconciliation_period = reconciliation_period
     end
 
     def total_deliveries_volume
@@ -71,6 +72,42 @@ module MyTankInfo
 
     def total_gallons_larger_than_leak_check?
       absolute_difference_volume > weekly_check_number
+    end
+
+    def allowable_variance
+      case @reconciliation_period
+      when :monthly
+        leak_check_result
+      when :ten_day
+        allowable_tolerance
+      when :weekly
+        weekly_check_number
+      else
+        raise ReconciliationPeriodMissingError.new
+      end
+    end
+
+    def failed?
+      case @reconciliation_period
+      when :monthly
+        leak_check_result_unacceptable?
+      when :ten_day
+        variance_is_gt_allowable_tolerance?
+      when :weekly
+        total_gallons_larger_than_leak_check?
+      else
+        raise ReconciliationPeriodMissingError.new
+      end
+    end
+
+    def passed?
+      !failed?
+    end
+  end
+
+  class ReconciliationPeriodMissingError < Error
+    def initialize
+      super("reconciliation_period must be one of the following values: :monthly, :ten_day, :weekly")
     end
   end
 end

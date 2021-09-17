@@ -11,7 +11,10 @@ class TankReconciliationResultsResourceTest < Minitest::Test
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    records = client.tank_reconciliation_records.list(site_id: SITE_ID)
+    records = client.tank_reconciliation_records.list(
+      site_id: SITE_ID,
+      reconciliation_period: :monthly
+    )
 
     assert_equal MyTankInfo::TankReconciliationRecordCollection, records.class
     assert_equal MyTankInfo::TankReconciliationRecord, records.data.first.class
@@ -28,7 +31,11 @@ class TankReconciliationResultsResourceTest < Minitest::Test
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
 
-    records = client.tank_reconciliation_records.retrieve(site_id: SITE_ID, started_at: started_at)
+    records = client.tank_reconciliation_records.retrieve(
+      site_id: SITE_ID,
+      reconciliation_period: :monthly,
+      started_at: started_at
+    )
 
     assert_equal MyTankInfo::TankReconciliationRecordCollection, records.class
     assert_equal MyTankInfo::TankReconciliationRecord, records.data.first.class

@@ -3,7 +3,7 @@
 module MyTankInfo
   class TankReconciliationRecord < Object
     def name
-      [product_name, tank_number].join(" - ")
+      [tank_number, product_name].join(" - ")
     end
 
     def tank_number

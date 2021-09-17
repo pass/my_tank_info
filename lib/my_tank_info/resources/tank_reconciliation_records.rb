@@ -2,12 +2,15 @@
 
 module MyTankInfo
   class TankReconciliationRecordsResource < Resource
-    def list(site_id:, **params)
+    def list(site_id:, reconciliation_period:, **params)
       response = get_request("api/recon/sites/#{site_id}", params: params)
-      TankReconciliationRecordCollection.from_response(response)
+      TankReconciliationRecordCollection.from_response(
+        response,
+        reconciliation_period: reconciliation_period
+      )
     end
 
-    def retrieve(site_id:, started_at:)
+    def retrieve(site_id:, reconciliation_period:, started_at:)
       date =
         if started_at.instance_of?(DateTime) ||
             started_at.instance_of?(Date) ||
@@ -18,7 +21,10 @@ module MyTankInfo
         end
 
       response = get_request("api/recon/sites/#{site_id}/#{date}")
-      TankReconciliationRecordCollection.from_response(response)
+      TankReconciliationRecordCollection.from_response(
+        response,
+        reconciliation_period: reconciliation_period
+      )
     end
 
     def update(site_id:, started_at:, **attributes)

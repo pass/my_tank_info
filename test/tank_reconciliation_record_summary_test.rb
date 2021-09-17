@@ -33,9 +33,33 @@ class TankReconciliationRecordSummaryTest < Minitest::Test
     refute @tank_reconciliation_summary.total_gallons_larger_than_leak_check?
   end
 
+  def test_monthly_reconciliation_period_specific_methods
+    setup(reconciliation_period: :monthly)
+    refute @tank_reconciliation_summary.failed?
+    assert @tank_reconciliation_summary.passed?
+
+    assert_equal 214, @tank_reconciliation_summary.allowable_variance
+  end
+
+  def test_ten_day_reconciliation_period_specific_methods
+    setup(reconciliation_period: :ten_day)
+    refute @tank_reconciliation_summary.failed?
+    assert @tank_reconciliation_summary.passed?
+
+    assert_equal 74, @tank_reconciliation_summary.allowable_variance
+  end
+
+  def test_weekly_reconciliation_period_specific_methods
+    setup(reconciliation_period: :weekly)
+    refute @tank_reconciliation_summary.failed?
+    assert @tank_reconciliation_summary.passed?
+
+    assert_equal 49, @tank_reconciliation_summary.allowable_variance
+  end
+
   private
 
-  def setup
+  def setup(reconciliation_period: :monthly)
     stub =
       stub_request(
         "/api/recon/sites/#{SITE_ID}",
@@ -43,7 +67,12 @@ class TankReconciliationRecordSummaryTest < Minitest::Test
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    @all_reconciliation_records = client.tank_reconciliation_records.list(site_id: SITE_ID)
+    @all_reconciliation_records =
+      client.tank_reconciliation_records.list(
+        site_id: SITE_ID,
+        reconciliation_period: reconciliation_period
+      )
+
     assert_equal 50, @all_reconciliation_records.size
 
     @tank = @all_reconciliation_records.tanks.first
