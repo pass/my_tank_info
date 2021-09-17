@@ -17,5 +17,14 @@ module MyTankInfo
     def is_missing?
       is_missing
     end
+
+    def book_inventory
+      (start_volume + deliveries_volume) - sales_volume
+    end
+
+    # Used for Weekly reconciliation
+    def removed_from_ust
+      (start_volume + deliveries_volume) - end_volume
+    end
   end
 end
