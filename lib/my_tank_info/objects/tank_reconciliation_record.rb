@@ -9,5 +9,13 @@ module MyTankInfo
     def tank_number
       tank_numbers.join(", ")
     end
+
+    def started_at
+      DateTime.parse(start_date_time)
+    end
+
+    def is_missing?
+      is_missing
+    end
   end
 end
