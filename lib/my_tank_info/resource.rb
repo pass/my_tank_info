@@ -54,16 +54,20 @@ module MyTankInfo
       when 401
         raise Error, "You did not supply valid authentication credentials - #{message}"
       when 403
-        raise Error, "You are not allowed to perform that action - #{message}"
+        raise RequestForbiddenError, "You are not allowed to perform that action - #{message}"
       when 404
         raise Error, "This resource could not be found"
       when 429
         raise Error, "Your request exceeded the API rate limit - #{message}"
       when 500
-        raise Error, "We were unable to perform the request due to server-side problems - #{message}"
+        raise InternalServerError, "We were unable to perform the request due to server-side problems - #{message}"
       end
 
       response
     end
   end
+
+  class RequestForbiddenError < Error; end
+
+  class InternalServerError < Error; end
 end
