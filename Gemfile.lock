@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    my_tank_info (0.1.0)
+    my_tank_info (1.0.0)
       faraday (~> 1.7)
       faraday_middleware (~> 1.1)
 
@@ -9,7 +9,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
-    faraday (1.7.2)
+    faraday (1.8.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
