@@ -83,8 +83,47 @@ client.sensor_status_results.list(site_id: 123)
 You may also pass ``:report_start_date`` and ``:report_end_date`` as optional parameters to retrive records for a given timeframe
 
 ```ruby
-client.tank_reconciliation_records.list(site_id: 123)
+# reconciliation_period must be one of the following - :weekly, :ten_day, :monthly
+client.tank_reconciliation_records.list(site_id: 123, reconciliation_period: :monthly)
 ```
+
+This call returns a special collection object called `TankReconciliationRecordCollection` that gives you a number
+of convienience methods for accessing the data in a easily usable way:
+
+```ruby
+collection = client.tank_reconciliation_records.list(site_id: 123, reconciliation_period: :monthly)
+
+collection.started_at
+collection.ended_at
+
+# returns a collection of TankReconciliationRecords
+collection.data
+
+# this returns a collection of Tank objects
+tanks = collection.tanks
+tank = tanks.fist
+
+tank.name # 1 - Unleaded
+tank.product_name # Unleaded
+tank.tank_number # 1
+tank.capacity # 5000
+
+# collection of TankReconciliationRecords belonging only to this tank
+tank.reconciliation_records
+
+# returns TankReconciliationRecordSummary object which provides
+# a number of calculations based upon the provided reconciliation_period
+tank.reconciliation_summary
+
+# evaluates associated reconciliation_records based upon the
+# provided reconciliation_period to decide if tank has passed
+tank.passed?
+
+# evaluates associated reconciliation_records based upon the
+# provided reconciliation_period to decide if tank has failed
+tank.failed?
+```
+
 
 ### Inventory API
 ```ruby
@@ -104,11 +143,25 @@ client.sitegroup_inventory_dashboards.list(sitegroup_id: 1)
 client.tank_daily_usage.list(tank_id: 1)
 
 # Returns deliveries made to the given tank over a time period.
-# Aupports :report_start_date and :report_end_date parameters
+# Supports :report_start_date and :report_end_date parameters
 client.tank_deliveries.list(tank_id: 1)
 
+
+## To update a tank delivery, the folowing params are required in the update request
+params = {
+  start_date_and_time: "2021-08-10T11:48:00.0000000-04:00",
+  start_gross: 500,
+  stop_date_and_time: "2021-08-10T12:48:00.0000000-04:00",
+  stop_gross: 600,
+  delivery_net: 100,
+  delivery_gross: 105,
+  bol_number: "123"
+}
+
+client.tank_deliveries.update(tank_id: 1, delivery_id: 1, **params)
+
 # Returns inventory readings for the given tank over a time period.
-# Aupports :report_start_date and :report_end_date parameters
+# Supports :report_start_date and :report_end_date parameters
 client.tank_inventory.list(tank_id: 1)
 
 # Returns recent inventory records for a tank (similiar to client.tank_deliveries.list)
@@ -121,10 +174,65 @@ client.tank_inventory.list(tank_id: 1)
 client.tank_runout.list(tank_id: 1)
 ```
 
-### Admin Actions
+### Admin API
+
+#### Notification Contacts
 ```ruby
-client.notification_contacts
-client.notification_rules
+client.notification_contacts.list
+
+# A list of all sites that the contact is setup to recieve notifications about
+# Note: will be empty if contact is setup to recieve updates for all sites (default_contact_settings: 1)
+client.notification_contacts.list_sites(contact_id: 1)
+
+client.notification_contacts.retrieve(contact_id: 1)
+
+
+# Updating and creating a NotificationContact record requires the following params
+params = {
+  first_name: "Kyle",
+  last_name: "Keesling",
+  email: "kyle@example.com",
+  sms_phone: "555-555-5555",
+  contact_method: 3, # 1 (SMS), 2 (Email), 3 (SMS & Email)
+  is_active: true,
+  default_contact_settings: 1 # 0 (None/No Sites), 1 (All Sites), 2 (Only Selected Sites)
+}
+
+client.notification_contacts.update(contact_id: 1, **params)
+
+client.notification_contacts.create(**params)
+
+client.notification_contacts.delete(contact_id: 1)
+```
+
+#### Notification Rules
+```ruby
+# Provides a list of all alarm/warning codes that rules can be defined for
+client.notification_rules.list_codes
+
+# List all contacts associated with a rule
+client.notification_rules.list_contacts(rule_id: 1)
+
+# List all rules that have been defined for a given code
+client.notification_rules.list(code_id: 1)
+
+# Updating a rule requires that you pass along an array of the
+# contacts who the rule should apply to as well as the prefereed
+# contact method. isSuppressed will silence the rule without
+# actually deleting it
+params = {
+  contacts: [
+    {
+      contactId: 3110,
+      contactMethod: 3 # 1 (SMS), 2 (Email), 3 (SMS & Email)
+    }
+  ],
+  isSuppressed: false
+}
+
+client.notification_rules.update(rule_id: 1, **params)
+
+client.notification_rules.delete(rule_id: 1)
 ```
 
 ## Development
