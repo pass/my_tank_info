@@ -9,12 +9,10 @@ module MyTankInfo
   autoload :Object, "my_tank_info/object"
   autoload :Resource, "my_tank_info/resource"
   autoload :Collection, "my_tank_info/collection"
+  autoload :Error, "my_tank_info/error"
   autoload :TankReconciliationRecordCollection, "my_tank_info/tank_reconciliation_record_collection"
 
   autoload :TankReconciliationRecordSummary, "my_tank_info/tank_reconciliation_record_summary"
-
-  autoload :Error, "my_tank_info/errors/error"
-  autoload :MissingRequiredAttributeError, "my_tank_info/errors/missing_required_attribute_error"
 
   autoload :EnvironmentalSitegroup, "my_tank_info/objects/environmental_sitegroup"
   autoload :InventorySitegroup, "my_tank_info/objects/inventory_sitegroup"

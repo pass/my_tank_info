@@ -67,6 +67,8 @@ module MyTankInfo
     end
   end
 
+  class MissingRequiredAttributeError < Error; end
+
   class RequestForbiddenError < Error; end
 
   class InternalServerError < Error; end
