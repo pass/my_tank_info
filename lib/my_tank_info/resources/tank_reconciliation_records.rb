@@ -27,8 +27,13 @@ module MyTankInfo
       )
     end
 
-    def update(site_id:, started_at:, **attributes)
-      put("api/recon/sites/#{site_id}/#{date}", body: attributes)
+    def update(site_id:, date:, reconciliation_period:, attributes:)
+      response = put_request("api/recon/sites/#{site_id}/#{date}", body: attributes)
+
+      TankReconciliationRecordCollection.from_response(
+        response,
+        reconciliation_period: reconciliation_period
+      )
     end
   end
 end

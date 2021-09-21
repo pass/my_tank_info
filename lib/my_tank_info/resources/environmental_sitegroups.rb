@@ -2,7 +2,7 @@
 
 module MyTankInfo
   class EnvironmentalSitegroupsResource < Resource
-    def list(environmental: true)
+    def list
       Collection.from_response(get_request("api/environmental/sitegroups"), type: EnvironmentalSitegroup)
     end
   end
