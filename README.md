@@ -70,7 +70,7 @@ client.tank_leak_results.list(site_id: 123)
 client.line_leak_results.list(site_id: 123)
 
 # View Sensor Status Results for a site
-# Will return empty if the site does not have Continuous iI-tank Leak Detection (CITLD), which is
+# Will return empty if the site does not have Continuous In-Tank Leak Detection (CITLD), which is
 # often referred to as CSLD or (Continuous Statistical Leak Detection)
 client.csld_results.list(site_id: 123)
 
@@ -123,6 +123,27 @@ tank.passed?
 # provided reconciliation_period to decide if tank has failed
 tank.failed?
 ```
+```ruby
+date = "2021-09-11T00:09:00-04:00" # date must match the standard MyTankInfo format (%Y-%m-%dT%H:%M:%S%:z)
+client.tank_reconciliation_records.retrieve(site_id: 1, date: date, reconciliation_period: :monthly)
+
+attrs = [
+  {
+    id: "1368902",
+    product_name: "E-10",
+    start_date_time: "2021-09-16T02:00:00.0000000-05:00",
+    end_date_time: "2021-09-17T02:00:00.0000000-05:00",
+    tank_numbers: "1",
+    start_volume: "7252",
+    end_volume: "7936",
+    deliveries_volume: "2004",
+    sales_volume: "1319",
+    water_height: "0"
+  }
+]
+client.tank_reconciliation_records.update(site_id: 1, date: date, reconciliation_period: :monthly, attributes: attrs)
+```
+
 
 
 ### Inventory API
