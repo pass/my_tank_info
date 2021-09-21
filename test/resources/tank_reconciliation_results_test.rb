@@ -18,14 +18,21 @@ class TankReconciliationResultsResourceTest < Minitest::Test
 
     assert_equal MyTankInfo::TankReconciliationRecordCollection, records.class
     assert_equal MyTankInfo::TankReconciliationRecord, records.data.first.class
+
     assert_equal 50, records.size
+    assert_equal "in", records.height_uom
+    assert_equal "gal", records.volume_uom
+    assert_equal :monthly, records.reconciliation_period
+    assert_equal SITE_ID, records.site_id
+    assert_equal records.data.min_by(&:started_at).started_at, records.started_at
+    assert_equal records.data.max_by(&:started_at).started_at, records.ended_at
   end
 
   def test_retrieve
-    started_at = "2021-09-14T02:00:00.0000000-05:00"
+    date = "2021-09-14T02:00:00.0000000-05:00"
     stub =
       stub_request(
-        "/api/recon/sites/#{SITE_ID}/#{started_at}",
+        "/api/recon/sites/#{SITE_ID}/#{date}",
         response: stub_response(fixture: "tank_reconciliation_results/retrieve")
       )
 
@@ -33,8 +40,8 @@ class TankReconciliationResultsResourceTest < Minitest::Test
 
     records = client.tank_reconciliation_records.retrieve(
       site_id: SITE_ID,
-      reconciliation_period: :monthly,
-      started_at: started_at
+      date: date,
+      reconciliation_period: :monthly
     )
 
     assert_equal MyTankInfo::TankReconciliationRecordCollection, records.class

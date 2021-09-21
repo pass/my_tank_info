@@ -10,14 +10,14 @@ module MyTankInfo
       )
     end
 
-    def retrieve(site_id:, reconciliation_period:, started_at:)
+    def retrieve(site_id:, date:, reconciliation_period:)
       date =
-        if started_at.instance_of?(DateTime) ||
-            started_at.instance_of?(Date) ||
-            started_at.instance_of?(Time)
-          started_at.strftime(MYTI_DATE_TIME_FORMAT)
+        if date.instance_of?(DateTime) ||
+            date.instance_of?(Date) ||
+            date.instance_of?(Time)
+          date.strftime(MYTI_DATE_TIME_FORMAT)
         else
-          started_at
+          date
         end
 
       response = get_request("api/recon/sites/#{site_id}/#{date}")
