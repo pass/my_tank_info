@@ -52,7 +52,7 @@ module MyTankInfo
       when 400
         raise Error, "Your request was malformed - #{message}"
       when 401
-        raise Error, "You did not supply valid authentication credentials - #{message}"
+        raise UnauthorizedError, "You did not supply valid authentication credentials - #{message}"
       when 403
         raise RequestForbiddenError, "You are not allowed to perform that action - #{message}"
       when 404
@@ -66,6 +66,8 @@ module MyTankInfo
       response
     end
   end
+
+  class UnauthorizedError < Error; end
 
   class MissingRequiredAttributeError < Error; end
 
