@@ -36,7 +36,7 @@ Once the token is generated it should be stored for use on all subsequent API re
 Practically speaking you'll need to store the username/password for then account you'd like to access
 so that you can periodically generate a new API token prior to expiration.
 
-Alternatively you can have your code catch _403 Forbidden_ errors and use that as a sign that a new API token is needed.
+Alternatively you can have your code catch ``MyTankInfo::UnauthorizedError`` errors and use that as a sign that a new API token is needed.
 
 This is also the only call you can perform without providing an :api_key to the client
 
