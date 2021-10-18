@@ -26,7 +26,7 @@ module MyTankInfo
     end
 
     def delete(contact_id:)
-      NotificationContact.new delete_request("api/admin/notificationcontacts/#{contact_id}").body
+      delete_request("api/admin/notificationcontacts/#{contact_id}")
     end
   end
 end
