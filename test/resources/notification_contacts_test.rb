@@ -93,8 +93,6 @@ class NotificationContactsResourceTest < Minitest::Test
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    contact = client.notification_contacts.delete(contact_id: CONTACT_ID)
-
-    assert_equal MyTankInfo::NotificationContact, contact.class
+    assert client.notification_contacts.delete(contact_id: CONTACT_ID)
   end
 end
