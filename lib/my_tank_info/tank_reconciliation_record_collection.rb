@@ -14,7 +14,7 @@ module MyTankInfo
       )
     end
 
-    def initialize(data:, reconciliation_period:)
+    def initialize(data:, reconciliation_period:, auto_fill_needed: nil)
       @data = data
       @size = @data.size
       @reconciliation_period = reconciliation_period
@@ -25,11 +25,22 @@ module MyTankInfo
 
       @volume_uom = @data.first&.volume_uom
       @height_uom = @data.first&.height_uom
+
+      @auto_fill_needed = auto_fill_needed
     end
 
     def tanks
       @data.map { |record|
-        records = @data.select { _1.tank_number == record.tank_number }.sort_by(&:started_at)
+        base_records = @data.select { _1.tank_number == record.tank_number }.sort_by(&:started_at)
+        records =
+          if @auto_fill_needed.nil?
+            base_records
+          elsif @auto_fill_needed
+            base_records.select { _1.auto_fill_needed == true }
+          else
+            base_records.select { _1.auto_fill_needed == false }
+          end
+
         summary =
           TankReconciliationRecordSummary.new(
             records,
