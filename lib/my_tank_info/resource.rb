@@ -66,12 +66,4 @@ module MyTankInfo
       response
     end
   end
-
-  class UnauthorizedError < Error; end
-
-  class MissingRequiredAttributeError < Error; end
-
-  class RequestForbiddenError < Error; end
-
-  class InternalServerError < Error; end
 end

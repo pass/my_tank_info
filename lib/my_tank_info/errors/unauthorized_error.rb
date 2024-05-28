@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
 module MyTankInfo
-  class MissingRequiredAttributeError < Error; end
+  class UnauthorizedError < Error; end
 end
+
