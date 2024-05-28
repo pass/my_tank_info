@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "my_tank_info/version"
+require "ostruct"
 
 module MyTankInfo
   MYTI_DATE_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S%:z"

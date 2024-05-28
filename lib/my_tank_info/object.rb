@@ -3,7 +3,7 @@
 module MyTankInfo
   class Object
     def initialize(attributes)
-      @attributes = OpenStruct.new(attributes)
+      @attributes = ::OpenStruct.new(attributes)
     end
 
     def method_missing(method, *args, &block)
