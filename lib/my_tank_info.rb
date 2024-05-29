@@ -70,5 +70,5 @@ module MyTankInfo
   autoload :UnauthorizedError, "my_tank_info/errors/unauthorized_error"
   autoload :MissingRequiredAttributeError, "my_tank_info/errors/missing_required_attribute_error"
   autoload :RequestForbiddenError, "my_tank_info/errors/request_forbidden_error"
-  autoload :InternalServerError, "my_tank_info/errors/internal_servier_error"
+  autoload :InternalServerError, "my_tank_info/errors/internal_server_error"
 end
