@@ -7,19 +7,19 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    faraday (2.12.0)
-      faraday-net_http (>= 2.0, < 3.4)
+    faraday (2.12.1)
+      faraday-net_http (>= 2.0, < 3.5)
       json
       logger
-    faraday-net_http (3.3.0)
-      net-http
-    json (2.7.5)
+    faraday-net_http (3.4.0)
+      net-http (>= 0.5.0)
+    json (2.8.2)
     logger (1.6.1)
     minitest (5.25.1)
-    net-http (0.4.1)
+    net-http (0.5.0)
       uri
     rake (13.2.1)
-    uri (0.13.1)
+    uri (1.0.2)
 
 PLATFORMS
   arm64-darwin-20
@@ -34,4 +34,4 @@ DEPENDENCIES
   rake (~> 13.0)
 
 BUNDLED WITH
-   2.2.25
+   2.5.23
