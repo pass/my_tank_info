@@ -77,6 +77,10 @@ module MyTankInfo
       TankRulesResource.new(self)
     end
 
+    def tank_sales_records
+      TankSalesRecordsResource.new(self)
+    end
+
     def tank_reconciliation_records
       TankReconciliationRecordsResource.new(self)
     end
