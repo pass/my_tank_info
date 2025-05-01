@@ -31,7 +31,7 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     drb (2.2.1)
-    faraday (2.12.1)
+    faraday (2.13.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -44,10 +44,10 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    json (2.8.2)
-    logger (1.6.1)
+    json (2.11.3)
+    logger (1.7.0)
     minitest (5.25.1)
-    net-http (0.5.0)
+    net-http (0.6.0)
       uri
     pp (0.6.2)
       prettyprint
