@@ -7,6 +7,7 @@ module MyTankInfo
       # this ensures that when names are provided in camelcase (BeginDateTime) 
       # they are converted to snake_case (begin_date_time)
       snake_case_keys = attributes&.transform_keys { |key| key.to_s.underscore }
+      @original_attributes = attributes
       @attributes = ::OpenStruct.new(snake_case_keys || {})
     end
 
