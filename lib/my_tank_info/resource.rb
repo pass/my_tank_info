@@ -48,6 +48,13 @@ module MyTankInfo
     def handle_response(response)
       message = response.body
 
+      message = 
+        if message.is_a?(Array)
+          message = message.join(". ")
+        else
+          message
+        end
+
       case response.status
       when 400
         raise Error, "Your request was malformed - #{message}"
@@ -60,7 +67,11 @@ module MyTankInfo
       when 429
         raise Error, "Your request exceeded the API rate limit - #{message}"
       when 500
-        raise InternalServerError, "We were unable to perform the request due to server-side problems - #{message}"
+        if message.downcase.include?("datareader")
+          raise DataReaderError, message
+        else
+          raise InternalServerError, "We were unable to perform the request due to server-side problems - #{message}"
+        end
       end
 
       response
