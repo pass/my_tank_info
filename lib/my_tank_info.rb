@@ -73,6 +73,7 @@ module MyTankInfo
   autoload :DataReaderError, "my_tank_info/errors/data_reader_error"
   autoload :InternalServerError, "my_tank_info/errors/internal_server_error"
   autoload :MissingRequiredAttributeError, "my_tank_info/errors/missing_required_attribute_error"
+  autoload :NotFoundError, "my_tank_info/errors/not_found_error"
   autoload :RequestForbiddenError, "my_tank_info/errors/request_forbidden_error"
   autoload :UnauthorizedError, "my_tank_info/errors/unauthorized_error"
 end

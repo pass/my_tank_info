@@ -63,7 +63,7 @@ module MyTankInfo
       when 403
         raise RequestForbiddenError, "You are not allowed to perform that action - #{message}"
       when 404
-        raise Error, "This resource could not be found"
+        raise NotFoundError, "This resource could not be found - #{message}"
       when 429
         raise Error, "Your request exceeded the API rate limit - #{message}"
       when 500
