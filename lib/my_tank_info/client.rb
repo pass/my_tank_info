@@ -93,6 +93,10 @@ module MyTankInfo
       NotificationRulesResource.new(self)
     end
 
+    def sites
+      SitesResource.new(self)
+    end
+
     def generate_api_token(username:, password:)
       TokensResource.new(self).generate(username: username, password: password)
     end

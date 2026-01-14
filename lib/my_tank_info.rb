@@ -69,6 +69,7 @@ module MyTankInfo
   autoload :NotificationRulesResource, "my_tank_info/resources/notification_rules"
 
   autoload :TokensResource, "my_tank_info/resources/tokens"
+  autoload :SitesResource, "my_tank_info/resources/sites"
 
   autoload :DataReaderError, "my_tank_info/errors/data_reader_error"
   autoload :InternalServerError, "my_tank_info/errors/internal_server_error"
