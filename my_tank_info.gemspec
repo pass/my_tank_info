@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "faraday", "~> 2"
   spec.add_dependency "activesupport", ">= 8"
+  spec.add_dependency "ostruct"
 
   spec.add_development_dependency "debug"
 

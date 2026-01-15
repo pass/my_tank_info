@@ -1,0 +1,47 @@
+[
+  {
+    "id": 675559,
+    "site_id": 1489,
+    "site_name": "Butler Tarkington - Sta 31",
+    "sensor_id": 649,
+    "sensor_number": 1,
+    "sensor_name": "REG STP",
+    "sensor_display_name": "1 REG STP: Liquid: STP Pump",
+    "sensor_type": "Tri-State",
+    "sensor_class": "Liquid",
+    "start_at": "2021-09-15T00:01:27.5742476-04:00",
+    "end_at": "",
+    "status": "Sensor Normal",
+    "status_is_good": true
+  },
+  {
+    "id": 675561,
+    "site_id": 1489,
+    "site_name": "Butler Tarkington - Sta 31",
+    "sensor_id": 650,
+    "sensor_number": 2,
+    "sensor_name": "SUPER STP",
+    "sensor_display_name": "2 SUPER STP: Liquid: STP Pump",
+    "sensor_type": "Tri-State",
+    "sensor_class": "Liquid",
+    "start_at": "2021-09-15T00:01:27.6743261-04:00",
+    "end_at": "",
+    "status": "Sensor Normal",
+    "status_is_good": true
+  },
+  {
+    "id": 675563,
+    "site_id": 1489,
+    "site_name": "Butler Tarkington - Sta 31",
+    "sensor_id": 651,
+    "sensor_number": 3,
+    "sensor_name": "HIGHWAY DIESEL",
+    "sensor_display_name": "3 HIGHWAY DIESEL: Liquid: STP Pump",
+    "sensor_type": "Tri-State",
+    "sensor_class": "Liquid",
+    "start_at": "2021-09-15T00:01:27.7824107-04:00",
+    "end_at": "",
+    "status": "Sensor Fuel Alarm",
+    "status_is_good": false
+  }
+]

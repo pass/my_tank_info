@@ -82,4 +82,75 @@ class SitesResourceTest < Minitest::Test
       client.sites.poll_inventory(site_id: SITE_ID)
     end
   end
+
+  def test_current_sensor_status
+    stub =
+      stub_request(
+        "/api/environmental/sites/#{SITE_ID}/sensorstatus/current",
+        response: stub_response(fixture: "sites/current_sensor_status")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    results = client.sites.current_sensor_status(site_id: SITE_ID)
+
+    assert_equal MyTankInfo::Collection, results.class
+    assert_equal 3, results.size
+    assert_equal MyTankInfo::SensorStatusResult, results.data.first.class
+  end
+
+  def test_current_sensor_status_unauthorized
+    stub =
+      stub_request(
+        "/api/environmental/sites/#{SITE_ID}/sensorstatus/current",
+        response: [401, {"Content-Type" => "application/json"}, '"Invalid token"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "bad_key", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::UnauthorizedError do
+      client.sites.current_sensor_status(site_id: SITE_ID)
+    end
+  end
+
+  def test_current_sensor_status_forbidden
+    stub =
+      stub_request(
+        "/api/environmental/sites/#{SITE_ID}/sensorstatus/current",
+        response: [403, {"Content-Type" => "application/json"}, '"Access denied"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::RequestForbiddenError do
+      client.sites.current_sensor_status(site_id: SITE_ID)
+    end
+  end
+
+  def test_current_sensor_status_not_found
+    stub =
+      stub_request(
+        "/api/environmental/sites/#{SITE_ID}/sensorstatus/current",
+        response: [404, {"Content-Type" => "application/json"}, '"Site not found"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::NotFoundError do
+      client.sites.current_sensor_status(site_id: SITE_ID)
+    end
+  end
+
+  def test_current_sensor_status_server_error
+    stub =
+      stub_request(
+        "/api/environmental/sites/#{SITE_ID}/sensorstatus/current",
+        response: [500, {"Content-Type" => "application/json"}, '"Internal error"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::InternalServerError do
+      client.sites.current_sensor_status(site_id: SITE_ID)
+    end
+  end
 end
