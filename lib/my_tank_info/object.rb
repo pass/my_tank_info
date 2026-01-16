@@ -4,20 +4,20 @@ require "active_support/core_ext/string/inflections"
 module MyTankInfo
   class Object
     def initialize(attributes)
-      # this ensures that when names are provided in camelcase (BeginDateTime) 
-      # they are converted to snake_case (begin_date_time)
-      snake_case_keys = attributes&.transform_keys { |key| key.to_s.underscore }
       @original_attributes = attributes
-      @attributes = ::OpenStruct.new(snake_case_keys || {})
+
+      # this ensures that when names are provided in camelcase (BeginDateTime)
+      # they are converted to snake_case (begin_date_time)
+      @attributes = Hash(attributes).transform_keys { |key| key.to_s.underscore.to_sym }
     end
 
     def method_missing(method, *args, &block)
-      attribute = @attributes.send(method, *args, &block)
+      attribute = @attributes[method]
       attribute.is_a?(Hash) ? Object.new(attribute) : attribute
     end
 
     def respond_to_missing?(method, include_private = false)
-      true
+      @attributes.key?(method)
     end
   end
 end
