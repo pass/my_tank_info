@@ -4,7 +4,6 @@ PATH
     my_tank_info (1.1.2)
       activesupport (>= 8)
       faraday (~> 2)
-      ostruct
 
 GEM
   remote: https://rubygems.org/
@@ -83,6 +82,7 @@ DEPENDENCIES
   debug
   minitest (~> 5.0)
   my_tank_info!
+  ostruct
   rake (~> 13.0)
 
 BUNDLED WITH
