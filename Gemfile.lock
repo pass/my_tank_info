@@ -49,7 +49,6 @@ GEM
     minitest (5.27.0)
     net-http (0.7.0)
       uri
-    ostruct (0.6.3)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -82,7 +81,6 @@ DEPENDENCIES
   debug
   minitest (~> 5.0)
   my_tank_info!
-  ostruct
   rake (~> 13.0)
 
 BUNDLED WITH
