@@ -12,16 +12,12 @@ module MyTankInfo
 
     def method_missing(method, *args, &block)
       key = method.to_sym
-      if @attributes.key?(key)
-        value = @attributes[key]
-        value.is_a?(Hash) ? Object.new(value) : value
-      else
-        super
-      end
+      value = @attributes[key]
+      value.is_a?(Hash) ? Object.new(value) : value
     end
 
     def respond_to_missing?(method, include_private = false)
-      @attributes.key?(method.to_sym) || super
+      true
     end
   end
 end
