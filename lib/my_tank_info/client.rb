@@ -5,10 +5,11 @@ require "faraday"
 module MyTankInfo
   class Client
     BASE_URL = "https://app.mytankinfo.com"
-    attr_reader :api_key
+    attr_reader :api_key, :base_url
 
-    def initialize(api_key:, adapter: Faraday.default_adapter, stubs: nil)
+    def initialize(api_key:, base_url: BASE_URL, adapter: Faraday.default_adapter, stubs: nil)
       @api_key = api_key
+      @base_url = base_url
       @adapter = adapter
       @stubs = stubs
     end
@@ -103,7 +104,7 @@ module MyTankInfo
 
     def connection
       @connection ||= Faraday.new do |conn|
-        conn.url_prefix = BASE_URL
+        conn.url_prefix = @base_url
         conn.request :json
         conn.response :json, content_type: "application/json"
         conn.adapter @adapter, @stubs
