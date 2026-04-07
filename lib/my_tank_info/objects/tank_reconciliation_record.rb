@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "time"
+
 module MyTankInfo
   class TankReconciliationRecord < Object
     def name
@@ -11,7 +13,7 @@ module MyTankInfo
     end
 
     def started_at
-      DateTime.parse(start_date_time)
+      Time.parse(start_date_time)
     end
 
     def is_missing?
