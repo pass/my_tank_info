@@ -10,5 +10,19 @@ module MyTankInfo
       response = get_request("api/environmental/sites/#{site_id}/sensorstatus/current")
       Collection.from_response(response, type: SensorStatusResult)
     end
+
+    def passive_poll(site_id:, timeout_seconds: nil)
+      path = "api/sites/#{site_id}/passivepoll"
+      path += "?timeoutSeconds=#{timeout_seconds}" unless timeout_seconds.nil?
+
+      body = post_request(path, body: {}).body || {}
+      tanks = body["tanks"] || []
+      alarms = body["alarms"] || []
+
+      {
+        inventory: tanks.flat_map { |tank| (tank["inventory"] || []).map { |row| TankInventoryRecord.new(row) } },
+        alarms: alarms.map { |alarm| Alarm.new(alarm) }
+      }
+    end
   end
 end
