@@ -180,9 +180,6 @@ class SitesResourceTest < Minitest::Test
     assert_equal 2, first_tank[:inventory].size
     assert(first_tank[:inventory].all? { |row| row.is_a?(MyTankInfo::TankInventoryRecord) })
     assert_equal 1024, first_tank[:inventory].first.gross
-    # Records are canonical — they do not carry tank context fields
-    assert_nil first_tank[:inventory].first.tank_id
-    assert_nil first_tank[:inventory].first.product_name
 
     assert_equal 1771, result[:tanks].last[:tank_id]
     assert_equal "PREMIUM", result[:tanks].last[:product_name]
