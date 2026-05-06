@@ -206,10 +206,15 @@ client = MyTankInfo::Client.new(
 )
 
 # Returns { inventory: [TankInventoryRecord, ...], alarms: [Alarm, ...] }
-# Inventory rows are aggregated across all of the site's tanks.
+# Inventory rows are aggregated across all of the site's tanks. Each row carries
+# its parent tank's :tank_id, :tank_number, and :product_name so callers can
+# tell which tank a row belongs to.
 result = client.sites.passive_poll(site_id: 1)
 
-result[:inventory].first.gross
+row = result[:inventory].first
+row.tank_id
+row.product_name
+row.gross
 result[:alarms].first.message
 
 # timeout_seconds is optional (server default is 120)

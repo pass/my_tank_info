@@ -172,6 +172,11 @@ class SitesResourceTest < Minitest::Test
     assert(result[:inventory].all? { |row| row.is_a?(MyTankInfo::TankInventoryRecord) })
     assert(result[:alarms].all? { |alarm| alarm.is_a?(MyTankInfo::Alarm) })
     assert_equal 1024, result[:inventory].first.gross
+    assert_equal 1770, result[:inventory].first.tank_id
+    assert_equal 1, result[:inventory].first.tank_number
+    assert_equal "REGULAR", result[:inventory].first.product_name
+    assert_equal 1771, result[:inventory].last.tank_id
+    assert_equal "PREMIUM", result[:inventory].last.product_name
     assert_equal 1920154, result[:alarms].first.canonical_id
   end
 

@@ -19,8 +19,17 @@ module MyTankInfo
       tanks = body["tanks"] || []
       alarms = body["alarms"] || []
 
+      inventory = tanks.flat_map do |tank|
+        tank_context = {
+          "tank_id" => tank["tank_id"],
+          "tank_number" => tank["tank_number"],
+          "product_name" => tank["product_name"]
+        }
+        (tank["inventory"] || []).map { |row| TankInventoryRecord.new(tank_context.merge(row)) }
+      end
+
       {
-        inventory: tanks.flat_map { |tank| (tank["inventory"] || []).map { |row| TankInventoryRecord.new(row) } },
+        inventory: inventory,
         alarms: alarms.map { |alarm| Alarm.new(alarm) }
       }
     end
