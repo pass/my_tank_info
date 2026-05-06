@@ -166,17 +166,29 @@ class SitesResourceTest < Minitest::Test
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     result = client.sites.passive_poll(site_id: SITE_ID)
 
-    assert_equal [:inventory, :alarms], result.keys
-    assert_equal 3, result[:inventory].size
+    assert_equal [:site, :tanks, :alarms], result.keys
+
+    assert_equal MyTankInfo::Site, result[:site].class
+    assert_equal "Butler Tarkington - Sta 31", result[:site].name
+
+    assert_equal 2, result[:tanks].size
+    first_tank = result[:tanks].first
+    assert_equal 1770, first_tank[:tank_id]
+    assert_equal 1, first_tank[:tank_number]
+    assert_equal "REGULAR", first_tank[:product_name]
+    assert_equal 6048, first_tank[:capacity]
+    assert_equal 2, first_tank[:inventory].size
+    assert(first_tank[:inventory].all? { |row| row.is_a?(MyTankInfo::TankInventoryRecord) })
+    assert_equal 1024, first_tank[:inventory].first.gross
+    # Records are canonical — they do not carry tank context fields
+    assert_nil first_tank[:inventory].first.tank_id
+    assert_nil first_tank[:inventory].first.product_name
+
+    assert_equal 1771, result[:tanks].last[:tank_id]
+    assert_equal "PREMIUM", result[:tanks].last[:product_name]
+
     assert_equal 2, result[:alarms].size
-    assert(result[:inventory].all? { |row| row.is_a?(MyTankInfo::TankInventoryRecord) })
     assert(result[:alarms].all? { |alarm| alarm.is_a?(MyTankInfo::Alarm) })
-    assert_equal 1024, result[:inventory].first.gross
-    assert_equal 1770, result[:inventory].first.tank_id
-    assert_equal 1, result[:inventory].first.tank_number
-    assert_equal "REGULAR", result[:inventory].first.product_name
-    assert_equal 1771, result[:inventory].last.tank_id
-    assert_equal "PREMIUM", result[:inventory].last.product_name
     assert_equal 1920154, result[:alarms].first.canonical_id
   end
 
@@ -192,7 +204,7 @@ class SitesResourceTest < Minitest::Test
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     result = client.sites.passive_poll(site_id: SITE_ID, timeout_seconds: 60)
 
-    assert_equal 3, result[:inventory].size
+    assert_equal 2, result[:tanks].size
     assert_equal 2, result[:alarms].size
   end
 

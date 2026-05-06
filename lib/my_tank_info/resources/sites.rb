@@ -16,21 +16,21 @@ module MyTankInfo
       path += "?timeoutSeconds=#{timeout_seconds}" unless timeout_seconds.nil?
 
       body = post_request(path, body: {}).body || {}
-      tanks = body["tanks"] || []
-      alarms = body["alarms"] || []
 
-      inventory = tanks.flat_map do |tank|
-        tank_context = {
-          "tank_id" => tank["tank_id"],
-          "tank_number" => tank["tank_number"],
-          "product_name" => tank["product_name"]
+      tanks = (body["tanks"] || []).map do |tank|
+        {
+          tank_id: tank["tank_id"],
+          tank_number: tank["tank_number"],
+          product_name: tank["product_name"],
+          capacity: tank["capacity"],
+          inventory: (tank["inventory"] || []).map { |row| TankInventoryRecord.new(row) }
         }
-        (tank["inventory"] || []).map { |row| TankInventoryRecord.new(tank_context.merge(row)) }
       end
 
       {
-        inventory: inventory,
-        alarms: alarms.map { |alarm| Alarm.new(alarm) }
+        site: body["site"] && Site.new(body["site"]),
+        tanks: tanks,
+        alarms: (body["alarms"] || []).map { |alarm| Alarm.new(alarm) }
       }
     end
   end
