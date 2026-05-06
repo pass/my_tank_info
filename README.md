@@ -195,6 +195,36 @@ client.tank_inventory.list(tank_id: 1)
 client.tank_runout.list(tank_id: 1)
 ```
 
+### Passive Poll (newer API)
+
+`passive_poll` requests an immediate ATG poll for a site and waits for results. This endpoint is only available on the newer API host, so the client must be instantiated against that base URL:
+
+```ruby
+client = MyTankInfo::Client.new(
+  api_key: ENV["MYTANKINFO_API_KEY"],
+  base_url: "https://mti-api-new.azurewebsites.net"
+)
+
+# Returns:
+#   {
+#     site:   Site,
+#     tanks:  [{ tank_id:, tank_number:, product_name:, capacity:,
+#               inventory: [TankInventoryRecord, ...] }, ...],
+#     alarms: [Alarm, ...]
+#   }
+# TankInventoryRecord and Alarm objects match the canonical shapes returned
+# elsewhere in the gem; tank metadata lives on the parent tank entry.
+result = client.sites.passive_poll(site_id: 1)
+
+result[:site].name
+result[:tanks].first[:product_name]
+result[:tanks].first[:inventory].first.gross
+result[:alarms].first.message
+
+# timeout_seconds is optional (server default is 120)
+client.sites.passive_poll(site_id: 1, timeout_seconds: 60)
+```
+
 ### Admin API
 
 #### Notification Contacts

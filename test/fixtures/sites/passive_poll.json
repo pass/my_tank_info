@@ -1,0 +1,142 @@
+{
+  "status": "ok",
+  "poll_duration_seconds": 12.3,
+  "site": {
+    "id": 1489,
+    "name": "Butler Tarkington - Sta 31",
+    "street1": "1234 Main St",
+    "city": "Indianapolis",
+    "state": "IN",
+    "zip": "46208",
+    "has_gauge": true,
+    "volume_uom": "gal",
+    "height_uom": "in",
+    "temperature_uom": "F"
+  },
+  "tanks": [
+    {
+      "tank_id": 1770,
+      "tank_number": 1,
+      "product_name": "REGULAR",
+      "capacity": 6048,
+      "inventory": [
+        {
+          "id": 161116177,
+          "date_and_time": "2021-09-15T09:14:00.0000000-04:00",
+          "inventory": 1024,
+          "gross": 1024,
+          "net": 1009,
+          "height": 21.68,
+          "water_height": 0,
+          "ullage": 5024,
+          "overfill": 3600,
+          "high": 3800,
+          "low": 1000,
+          "is_editable": false,
+          "is_projected": false,
+          "volume_uom": "gal",
+          "height_uom": "in",
+          "temperature_uom": "F"
+        },
+        {
+          "id": 161111022,
+          "date_and_time": "2021-09-15T08:13:00.0000000-04:00",
+          "inventory": 1100,
+          "gross": 1100,
+          "net": 1084,
+          "height": 22.8,
+          "water_height": 0,
+          "ullage": 4948,
+          "overfill": 3600,
+          "high": 3800,
+          "low": 1000,
+          "is_editable": false,
+          "is_projected": false,
+          "volume_uom": "gal",
+          "height_uom": "in",
+          "temperature_uom": "F"
+        }
+      ]
+    },
+    {
+      "tank_id": 1771,
+      "tank_number": 2,
+      "product_name": "PREMIUM",
+      "capacity": 6048,
+      "inventory": [
+        {
+          "id": 161116200,
+          "date_and_time": "2021-09-15T09:14:00.0000000-04:00",
+          "inventory": 2200,
+          "gross": 2200,
+          "net": 2185,
+          "height": 38.4,
+          "water_height": 0,
+          "ullage": 3848,
+          "overfill": 3600,
+          "high": 3800,
+          "low": 1000,
+          "is_editable": false,
+          "is_projected": false,
+          "volume_uom": "gal",
+          "height_uom": "in",
+          "temperature_uom": "F"
+        }
+      ]
+    }
+  ],
+  "alarms": [
+    {
+      "id": 1920154,
+      "site_id": 1489,
+      "site_name": "Butler Tarkington - Sta 31",
+      "site_group_id": 73,
+      "site_group_name": "Acme Group Locations",
+      "object_type": "tank",
+      "object_id": 1770,
+      "date_and_time": "2021-09-15T00:17:00.0000000-04:00",
+      "source": "ATG",
+      "sensor_number": 1,
+      "sensor_name": "REGULAR",
+      "category": "Tank Alarm",
+      "code": null,
+      "message": "Tank Low Product Alarm",
+      "priority": 1,
+      "acknowledged_at": null,
+      "is_acknowledged": false,
+      "acknowledged_by_name": null,
+      "acknowledged_by_email": null,
+      "display_name": "1 REGULAR",
+      "has_notes": false,
+      "alarm_history_id": 1920154,
+      "module_group_id": 0,
+      "module_group_name": "inventory"
+    },
+    {
+      "id": 1920155,
+      "site_id": 1489,
+      "site_name": "Butler Tarkington - Sta 31",
+      "site_group_id": 73,
+      "site_group_name": "Acme Group Locations",
+      "object_type": "tank",
+      "object_id": 1771,
+      "date_and_time": "2021-09-15T00:18:00.0000000-04:00",
+      "source": "ATG",
+      "sensor_number": 2,
+      "sensor_name": "PREMIUM",
+      "category": "Tank Alarm",
+      "code": null,
+      "message": "Tank High Water Alarm",
+      "priority": 2,
+      "acknowledged_at": null,
+      "is_acknowledged": false,
+      "acknowledged_by_name": null,
+      "acknowledged_by_email": null,
+      "display_name": "2 PREMIUM",
+      "has_notes": false,
+      "alarm_history_id": 1920155,
+      "module_group_id": 0,
+      "module_group_name": "inventory"
+    }
+  ]
+}

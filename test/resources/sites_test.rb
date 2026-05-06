@@ -153,4 +153,103 @@ class SitesResourceTest < Minitest::Test
       client.sites.current_sensor_status(site_id: SITE_ID)
     end
   end
+
+  def test_passive_poll
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/passivepoll",
+        method: :post,
+        body: {},
+        response: stub_response(fixture: "sites/passive_poll")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    result = client.sites.passive_poll(site_id: SITE_ID)
+
+    assert_equal [:site, :tanks, :alarms], result.keys
+
+    assert_equal MyTankInfo::Site, result[:site].class
+    assert_equal "Butler Tarkington - Sta 31", result[:site].name
+
+    assert_equal 2, result[:tanks].size
+    first_tank = result[:tanks].first
+    assert_equal 1770, first_tank[:tank_id]
+    assert_equal 1, first_tank[:tank_number]
+    assert_equal "REGULAR", first_tank[:product_name]
+    assert_equal 6048, first_tank[:capacity]
+    assert_equal 2, first_tank[:inventory].size
+    assert(first_tank[:inventory].all? { |row| row.is_a?(MyTankInfo::TankInventoryRecord) })
+    assert_equal 1024, first_tank[:inventory].first.gross
+
+    assert_equal 1771, result[:tanks].last[:tank_id]
+    assert_equal "PREMIUM", result[:tanks].last[:product_name]
+
+    assert_equal 2, result[:alarms].size
+    assert(result[:alarms].all? { |alarm| alarm.is_a?(MyTankInfo::Alarm) })
+    assert_equal 1920154, result[:alarms].first.canonical_id
+  end
+
+  def test_passive_poll_with_timeout_seconds
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/passivepoll?timeoutSeconds=60",
+        method: :post,
+        body: {},
+        response: stub_response(fixture: "sites/passive_poll")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    result = client.sites.passive_poll(site_id: SITE_ID, timeout_seconds: 60)
+
+    assert_equal 2, result[:tanks].size
+    assert_equal 2, result[:alarms].size
+  end
+
+  def test_passive_poll_unauthorized
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/passivepoll",
+        method: :post,
+        body: {},
+        response: [401, {"Content-Type" => "application/json"}, '"Invalid token"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "bad_key", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::UnauthorizedError do
+      client.sites.passive_poll(site_id: SITE_ID)
+    end
+  end
+
+  def test_passive_poll_forbidden
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/passivepoll",
+        method: :post,
+        body: {},
+        response: [403, {"Content-Type" => "application/json"}, '"Access denied"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::RequestForbiddenError do
+      client.sites.passive_poll(site_id: SITE_ID)
+    end
+  end
+
+  def test_passive_poll_not_found
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/passivepoll",
+        method: :post,
+        body: {},
+        response: [404, {"Content-Type" => "application/json"}, '"Site not found"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::NotFoundError do
+      client.sites.passive_poll(site_id: SITE_ID)
+    end
+  end
 end
