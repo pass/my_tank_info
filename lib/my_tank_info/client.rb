@@ -5,13 +5,17 @@ require "faraday"
 module MyTankInfo
   class Client
     BASE_URL = "https://app.mytankinfo.com"
+    DEFAULT_TIMEOUT = 120
     attr_reader :api_key, :base_url
 
-    def initialize(api_key:, base_url: BASE_URL, adapter: Faraday.default_adapter, stubs: nil)
+    def initialize(api_key:, base_url: BASE_URL, adapter: Faraday.default_adapter,
+                   stubs: nil, timeout: DEFAULT_TIMEOUT, open_timeout: nil)
       @api_key = api_key
       @base_url = base_url
       @adapter = adapter
       @stubs = stubs
+      @timeout = timeout
+      @open_timeout = open_timeout
     end
 
     def environmental_sitegroups
@@ -107,6 +111,8 @@ module MyTankInfo
         conn.url_prefix = @base_url
         conn.request :json
         conn.response :json, content_type: "application/json"
+        conn.options.timeout = @timeout if @timeout
+        conn.options.open_timeout = @open_timeout if @open_timeout
         conn.adapter @adapter, @stubs
       end
     end

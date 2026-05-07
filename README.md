@@ -28,6 +28,16 @@ Or install it yourself as:
 client = MyTankInfo::Client.new(api_key: ENV["MYTANKINFO_API_KEY"])
 ```
 
+You can also customize Faraday's `timeout` (read) and `open_timeout` (connect) in seconds. `timeout` defaults to 120s to cover the server-side `passive_poll` default; `open_timeout` is optional and falls back to Faraday's default when omitted.
+
+```ruby
+client = MyTankInfo::Client.new(
+  api_key: ENV["MYTANKINFO_API_KEY"],
+  timeout: 30,
+  open_timeout: 5
+)
+```
+
 ### API Tokens
 You must obtain an API token in order to use this gem. Tokens appear to last for 1 year before the expire.
 
