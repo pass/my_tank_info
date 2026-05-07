@@ -10,10 +10,10 @@ class ClientTest < Minitest::Test
     assert_equal 5, client.connection.options.open_timeout
   end
 
-  def test_timeout_options_default_to_faraday_defaults
+  def test_timeout_defaults_to_120_seconds_to_cover_passive_poll
     client = MyTankInfo::Client.new(api_key: "fake")
 
-    assert_nil client.connection.options.timeout
+    assert_equal 120, client.connection.options.timeout
     assert_nil client.connection.options.open_timeout
   end
 end
