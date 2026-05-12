@@ -8,24 +8,34 @@ module MyTankInfo
       @client = client
     end
 
-    def get_request(url, params: {}, headers: {})
-      handle_response client.connection.get(url, params, default_headers.merge(headers))
+    def get_request(url, params: {}, headers: {}, skip_auth: false)
+      with_retry(skip_auth) do
+        handle_response client.connection.get(url, params, request_headers(headers, skip_auth))
+      end
     end
 
-    def post_request(url, body:, headers: {})
-      handle_response client.connection.post(url, body, default_headers.merge(headers))
+    def post_request(url, body:, headers: {}, skip_auth: false)
+      with_retry(skip_auth) do
+        handle_response client.connection.post(url, body, request_headers(headers, skip_auth))
+      end
     end
 
-    def patch_request(url, body:, headers: {})
-      handle_response client.connection.patch(url, body, default_headers.merge(headers))
+    def patch_request(url, body:, headers: {}, skip_auth: false)
+      with_retry(skip_auth) do
+        handle_response client.connection.patch(url, body, request_headers(headers, skip_auth))
+      end
     end
 
-    def put_request(url, body:, headers: {})
-      handle_response client.connection.put(url, body, default_headers.merge(headers))
+    def put_request(url, body:, headers: {}, skip_auth: false)
+      with_retry(skip_auth) do
+        handle_response client.connection.put(url, body, request_headers(headers, skip_auth))
+      end
     end
 
-    def delete_request(url, params: {}, headers: {})
-      handle_response client.connection.delete(url, params, default_headers.merge(headers))
+    def delete_request(url, params: {}, headers: {}, skip_auth: false)
+      with_retry(skip_auth) do
+        handle_response client.connection.delete(url, params, request_headers(headers, skip_auth))
+      end
     end
 
     private
@@ -41,14 +51,20 @@ module MyTankInfo
       end
     end
 
-    def default_headers
-      {Authorization: "Bearer #{client.api_key}"}
+    def request_headers(headers, skip_auth)
+      skip_auth ? headers : client.auth_headers.merge(headers)
+    end
+
+    def with_retry(skip_auth, &block)
+      return yield if skip_auth
+
+      client.with_auth_retry(&block)
     end
 
     def handle_response(response)
       message = response.body
 
-      message = 
+      message =
         if message.is_a?(Array)
           message = message.join(". ")
         else

@@ -7,6 +7,7 @@ module MyTankInfo
   MYTI_DATE_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S%:z"
 
   autoload :Client, "my_tank_info/client"
+  autoload :JwtClient, "my_tank_info/jwt_client"
   autoload :Object, "my_tank_info/object"
   autoload :Resource, "my_tank_info/resource"
   autoload :Collection, "my_tank_info/collection"
@@ -69,6 +70,8 @@ module MyTankInfo
   autoload :NotificationRulesResource, "my_tank_info/resources/notification_rules"
 
   autoload :TokensResource, "my_tank_info/resources/tokens"
+  autoload :AuthTokensResource, "my_tank_info/resources/auth_tokens"
+  autoload :AuthToken, "my_tank_info/objects/auth_token"
   autoload :SitesResource, "my_tank_info/resources/sites"
 
   autoload :DataReaderError, "my_tank_info/errors/data_reader_error"

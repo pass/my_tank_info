@@ -106,6 +106,14 @@ module MyTankInfo
       TokensResource.new(self).generate(username: username, password: password)
     end
 
+    def auth_headers
+      {Authorization: "Bearer #{api_key}"}
+    end
+
+    def with_auth_retry
+      yield
+    end
+
     def connection
       @connection ||= Faraday.new do |conn|
         conn.url_prefix = @base_url
