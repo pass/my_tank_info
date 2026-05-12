@@ -1,0 +1,8 @@
+{
+  "accessToken": "access-token-initial",
+  "tokenType": "Bearer",
+  "expiresIn": 3600,
+  "refreshToken": "refresh-token-initial",
+  "refreshExpiresIn": 2592000,
+  "scope": "external"
+}
