@@ -11,6 +11,13 @@ module MyTankInfo
       Collection.from_response(response, type: SensorStatusResult)
     end
 
+    def run_atg_command(site_id:, command:, timeout_seconds: nil)
+      path = "api/sites/#{site_id}/runatgcommand"
+      path += "?timeoutSeconds=#{timeout_seconds}" unless timeout_seconds.nil?
+
+      AtgCommandResult.new post_request(path, body: {command: command}).body
+    end
+
     def passive_poll(site_id:, timeout_seconds: nil)
       path = "api/sites/#{site_id}/passivepoll"
       path += "?timeoutSeconds=#{timeout_seconds}" unless timeout_seconds.nil?

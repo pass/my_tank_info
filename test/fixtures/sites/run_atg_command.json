@@ -1,0 +1,7 @@
+{
+  "status": "ok",
+  "command": "I20100",
+  "results": "I20100\nMAY 19, 2026  9:42 AM\n\nIN-TANK INVENTORY\n\nTANK PRODUCT             VOLUME TC VOLUME   ULLAGE   HEIGHT    WATER     TEMP\n  1  REGULAR              1024     1019      4976    36.21     0.00    62.4\n",
+  "event_id": 123456,
+  "poll_duration_seconds": 4.27
+}

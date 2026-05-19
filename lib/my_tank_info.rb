@@ -26,6 +26,7 @@ module MyTankInfo
   autoload :LineLeakResult, "my_tank_info/objects/line_leak_result"
   autoload :CsldResult, "my_tank_info/objects/csld_result"
   autoload :SensorStatusResult, "my_tank_info/objects/sensor_status_result"
+  autoload :AtgCommandResult, "my_tank_info/objects/atg_command_result"
 
   autoload :SitegroupInventoryDashboard, "my_tank_info/objects/sitegroup_inventory_dashboard"
   autoload :TankDailyUsageRecord, "my_tank_info/objects/tank_daily_usage_record"

@@ -252,4 +252,88 @@ class SitesResourceTest < Minitest::Test
       client.sites.passive_poll(site_id: SITE_ID)
     end
   end
+
+  def test_run_atg_command
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/runatgcommand",
+        method: :post,
+        body: {command: "I20100"},
+        response: stub_response(fixture: "sites/run_atg_command")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    result = client.sites.run_atg_command(site_id: SITE_ID, command: "I20100")
+
+    assert_equal MyTankInfo::AtgCommandResult, result.class
+    assert_equal "ok", result.status
+    assert_equal "I20100", result.command
+    assert_equal 123456, result.event_id
+    assert_in_delta 4.27, result.poll_duration_seconds
+    assert_match(/IN-TANK INVENTORY/, result.results)
+  end
+
+  def test_run_atg_command_with_timeout_seconds
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/runatgcommand?timeoutSeconds=60",
+        method: :post,
+        body: {command: "I20100"},
+        response: stub_response(fixture: "sites/run_atg_command")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    result = client.sites.run_atg_command(site_id: SITE_ID, command: "I20100", timeout_seconds: 60)
+
+    assert_equal MyTankInfo::AtgCommandResult, result.class
+    assert_equal "ok", result.status
+  end
+
+  def test_run_atg_command_unauthorized
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/runatgcommand",
+        method: :post,
+        body: {command: "I20100"},
+        response: [401, {"Content-Type" => "application/json"}, '"Invalid token"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "bad_key", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::UnauthorizedError do
+      client.sites.run_atg_command(site_id: SITE_ID, command: "I20100")
+    end
+  end
+
+  def test_run_atg_command_forbidden
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/runatgcommand",
+        method: :post,
+        body: {command: "I20100"},
+        response: [403, {"Content-Type" => "application/json"}, '"Access denied"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::RequestForbiddenError do
+      client.sites.run_atg_command(site_id: SITE_ID, command: "I20100")
+    end
+  end
+
+  def test_run_atg_command_not_found
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/runatgcommand",
+        method: :post,
+        body: {command: "I20100"},
+        response: [404, {"Content-Type" => "application/json"}, '"Site not found"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::NotFoundError do
+      client.sites.run_atg_command(site_id: SITE_ID, command: "I20100")
+    end
+  end
 end
