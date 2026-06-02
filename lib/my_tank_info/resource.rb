@@ -72,6 +72,8 @@ module MyTankInfo
         end
 
       case response.status
+      when 200..299
+        response
       when 400
         raise Error, "Your request was malformed - #{message}"
       when 401
@@ -83,14 +85,21 @@ module MyTankInfo
       when 429
         raise Error, "Your request exceeded the API rate limit - #{message}"
       when 500
-        if message.downcase.include?("datareader")
+        if message.to_s.downcase.include?("datareader")
           raise DataReaderError, message
         else
           raise InternalServerError, "We were unable to perform the request due to server-side problems - #{message}"
         end
+      else
+        # Any other status is one we don't expect from the API. Faraday isn't
+        # configured to raise on these, and its JSON middleware only parses
+        # `application/json` responses - so without this the raw (often
+        # non-JSON) body flows downstream and blows up as a NoMethodError when
+        # something tries to treat it as a parsed object. Surface the status
+        # and body instead so the failure is diagnosable.
+        raise UnexpectedResponseError,
+          "The API returned an unexpected response (HTTP #{response.status}) - #{MyTankInfo.truncate_error_body(message)}"
       end
-
-      response
     end
   end
 end
