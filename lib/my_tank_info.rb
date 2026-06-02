@@ -6,6 +6,18 @@ require_relative "my_tank_info/version"
 module MyTankInfo
   MYTI_DATE_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S%:z"
 
+  # Cap a captured response body before it goes into an exception message so a
+  # large error page (e.g. an HTML 502 from a proxy) doesn't bloat the error
+  # tracker payload while still preserving enough to troubleshoot.
+  MAX_ERROR_BODY_LENGTH = 500
+
+  def self.truncate_error_body(body)
+    string = body.to_s
+    return string if string.length <= MAX_ERROR_BODY_LENGTH
+
+    "#{string[0, MAX_ERROR_BODY_LENGTH]}... (truncated #{string.length - MAX_ERROR_BODY_LENGTH} chars)"
+  end
+
   autoload :Client, "my_tank_info/client"
   autoload :JwtClient, "my_tank_info/jwt_client"
   autoload :Object, "my_tank_info/object"
@@ -81,4 +93,5 @@ module MyTankInfo
   autoload :NotFoundError, "my_tank_info/errors/not_found_error"
   autoload :RequestForbiddenError, "my_tank_info/errors/request_forbidden_error"
   autoload :UnauthorizedError, "my_tank_info/errors/unauthorized_error"
+  autoload :UnexpectedResponseError, "my_tank_info/errors/unexpected_response_error"
 end

@@ -1,3 +1,6 @@
+## [1.2.0] - 2026-06-02
+- Raise `MyTankInfo::UnexpectedResponseError` (capturing the HTTP status and a truncated response body) when the API returns an unexpected status code or a non-JSON body, instead of letting the raw string flow downstream and surface as an opaque `NoMethodError`
+
 ## [1.1.1] - 2021-10-18
 - Fix bug in NotificationContact delete logic
 

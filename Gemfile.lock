@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    my_tank_info (1.1.2)
+    my_tank_info (1.2.0)
       activesupport (>= 8)
       faraday (~> 2)
 

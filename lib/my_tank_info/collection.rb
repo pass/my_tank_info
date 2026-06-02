@@ -6,10 +6,20 @@ module MyTankInfo
 
     def self.from_response(response, type:, filter_attribute: nil, filter_value: nil)
       body =
-        if response.body.instance_of?(Hash)
+        case response.body
+        when Hash
           [response.body]
-        else
+        when Array
           response.body
+        else
+          # A successful status with a body that isn't the JSON object/array we
+          # expect (e.g. an empty or plain-text body). Calling `.map` on it
+          # would raise an opaque NoMethodError - capture the status and body
+          # so the unexpected response is diagnosable.
+          raise UnexpectedResponseError,
+            "Expected a JSON object or array from the API but got " \
+            "#{response.body.class} (HTTP #{response.status}) - " \
+            "#{MyTankInfo.truncate_error_body(response.body)}"
         end
 
       @collection = new(
