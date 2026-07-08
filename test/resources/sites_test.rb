@@ -336,4 +336,59 @@ class SitesResourceTest < Minitest::Test
       client.sites.run_atg_command(site_id: SITE_ID, command: "I20100")
     end
   end
+
+  def test_run_atg_multi_commands
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/runatgmulticommands",
+        method: :post,
+        body: {commands: "I20100;I20200;I11100"},
+        response: stub_response(fixture: "sites/run_atg_multi_commands")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    result = client.sites.run_atg_multi_commands(site_id: SITE_ID, commands: ["I20100", "I20200", "I11100"])
+
+    assert_equal MyTankInfo::AtgMultiCommandResult, result.class
+    assert_equal "ok", result.status
+    assert_equal 123457, result.event_id
+    assert_in_delta 9.81, result.poll_duration_seconds
+    assert_equal 3, result.results.size
+    assert_equal ["I20100", "I20200", "I11100"], result.results.map(&:command)
+    assert_equal [0, 1, 2], result.results.map(&:sequence)
+    assert_match(/IN-TANK INVENTORY/, result.response_for("I20100"))
+    assert_match(/DELIVERY REPORT/, result.response_for("i20200"))
+    assert_nil result.response_for("I99999")
+  end
+
+  def test_run_atg_multi_commands_accepts_preformatted_string
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/runatgmulticommands?timeoutSeconds=600",
+        method: :post,
+        body: {commands: "I20100;I20200"},
+        response: stub_response(fixture: "sites/run_atg_multi_commands")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    result = client.sites.run_atg_multi_commands(site_id: SITE_ID, commands: "I20100;I20200", timeout_seconds: 600)
+
+    assert_equal "ok", result.status
+  end
+
+  def test_run_atg_multi_commands_unauthorized
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/runatgmulticommands",
+        method: :post,
+        body: {commands: "I20100"},
+        response: [401, {"Content-Type" => "application/json"}, '"Invalid token"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "bad_key", adapter: :test, stubs: stub)
+
+    assert_raises MyTankInfo::UnauthorizedError do
+      client.sites.run_atg_multi_commands(site_id: SITE_ID, commands: ["I20100"])
+    end
+  end
 end

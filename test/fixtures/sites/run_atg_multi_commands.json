@@ -1,0 +1,22 @@
+{
+  "status": "ok",
+  "event_id": 123457,
+  "poll_duration_seconds": 9.81,
+  "results": [
+    {
+      "sequence": 0,
+      "command": "I20100",
+      "response": "I20100\nMAY 19, 2026  9:42 AM\n\nIN-TANK INVENTORY\n\nTANK PRODUCT             VOLUME TC VOLUME   ULLAGE   HEIGHT    WATER     TEMP\n  1  REGULAR              1024     1019      4976    36.21     0.00    62.4\n"
+    },
+    {
+      "sequence": 1,
+      "command": "I20200",
+      "response": "I20200\nMAY 19, 2026  9:42 AM\n\nDELIVERY REPORT\n\nT 1:REGULAR\n"
+    },
+    {
+      "sequence": 2,
+      "command": "I11100",
+      "response": "I11100\nMAY 19, 2026  9:42 AM\n\nALARM HISTORY REPORT\n"
+    }
+  ]
+}

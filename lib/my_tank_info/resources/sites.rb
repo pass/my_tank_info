@@ -18,6 +18,16 @@ module MyTankInfo
       AtgCommandResult.new post_request(path, body: {command: command}).body
     end
 
+    # Runs a batch of ATG special commands in one gateway poll session.
+    # Accepts an array of command codes or a pre-joined semicolon-separated
+    # string; responses come back per-command in AtgMultiCommandResult#results.
+    def run_atg_multi_commands(site_id:, commands:, timeout_seconds: nil)
+      path = "api/sites/#{site_id}/runatgmulticommands"
+      path += "?timeoutSeconds=#{timeout_seconds}" unless timeout_seconds.nil?
+
+      AtgMultiCommandResult.new post_request(path, body: {commands: Array(commands).join(";")}).body
+    end
+
     def passive_poll(site_id:, timeout_seconds: nil)
       path = "api/sites/#{site_id}/passivepoll"
       path += "?timeoutSeconds=#{timeout_seconds}" unless timeout_seconds.nil?
