@@ -32,6 +32,19 @@ class CollectionTest < Minitest::Test
     assert_includes error.message, "Not the JSON we expected"
   end
 
+  def test_from_response_raises_on_array_of_non_hash_elements
+    response = FakeResponse.new(200, [466.0, 464.0, 454.0])
+
+    error =
+      assert_raises MyTankInfo::UnexpectedResponseError do
+        MyTankInfo::Collection.from_response(response, type: MyTankInfo::TankLeakResult)
+      end
+
+    assert_includes error.message, "Float"
+    assert_includes error.message, "HTTP 200"
+    assert_includes error.message, "466.0"
+  end
+
   def test_truncate_error_body_returns_short_bodies_unchanged
     assert_equal "short body", MyTankInfo.truncate_error_body("short body")
   end
