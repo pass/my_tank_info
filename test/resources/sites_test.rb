@@ -67,6 +67,64 @@ class SitesResourceTest < Minitest::Test
     end
   end
 
+  def test_poll_inventory_rate_limited
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/pollnow/",
+        method: :post,
+        body: {},
+        response: [429, {"Content-Type" => "application/json", "Retry-After" => "30"}, '"Too many requests"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    error =
+      assert_raises MyTankInfo::RateLimitError do
+        client.sites.poll_inventory(site_id: SITE_ID)
+      end
+
+    assert_equal "Your request exceeded the API rate limit - Too many requests", error.message
+    assert_equal 30, error.retry_after
+  end
+
+  def test_poll_inventory_rate_limited_without_retry_after_header
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/pollnow/",
+        method: :post,
+        body: {},
+        response: [429, {"Content-Type" => "application/json"}, '"Too many requests"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    error =
+      assert_raises MyTankInfo::RateLimitError do
+        client.sites.poll_inventory(site_id: SITE_ID)
+      end
+
+    assert_nil error.retry_after
+  end
+
+  def test_poll_inventory_rate_limited_with_http_date_retry_after
+    stub =
+      stub_request(
+        "/api/sites/#{SITE_ID}/pollnow/",
+        method: :post,
+        body: {},
+        response: [429, {"Content-Type" => "application/json", "Retry-After" => (Time.now + 60).httpdate}, '"Too many requests"']
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    error =
+      assert_raises MyTankInfo::RateLimitError do
+        client.sites.poll_inventory(site_id: SITE_ID)
+      end
+
+    assert_includes 55..60, error.retry_after
+  end
+
   def test_poll_inventory_server_error
     stub =
       stub_request(

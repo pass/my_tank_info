@@ -142,6 +142,54 @@ class JwtClientTest < Minitest::Test
     end
   end
 
+  def test_authenticate_rate_limited_raises_rate_limit_error
+    stubs = Faraday::Adapter::Test::Stubs.new do |stub|
+      stub.post("/api/token", {username: "u", password: "p"}.to_json) do
+        [429, JSON_CT.merge("Retry-After" => "15"), '"Too many requests"']
+      end
+    end
+
+    client = MyTankInfo::JwtClient.new(
+      base_url: "http://example.test",
+      username: "u", password: "p",
+      adapter: :test, stubs: stubs
+    )
+
+    error =
+      assert_raises MyTankInfo::RateLimitError do
+        client.authenticate!
+      end
+
+    assert_equal 15, error.retry_after
+  end
+
+  def test_refresh_rate_limited_raises_without_reauthenticating
+    auth_calls = 0
+    stubs = Faraday::Adapter::Test::Stubs.new do |stub|
+      stub.get("/protected") { [401, JSON_CT, '"expired"'] }
+      stub.post("/api/token/refresh", {refreshToken: "stale-refresh"}.to_json) do
+        [429, JSON_CT, '"Too many requests"']
+      end
+      stub.post("/api/token", {username: "u", password: "p"}.to_json) do
+        auth_calls += 1
+        [200, JSON_CT, GENERATE_BODY]
+      end
+    end
+
+    client = MyTankInfo::JwtClient.new(
+      base_url: "http://example.test",
+      username: "u", password: "p",
+      access_token: "stale-access",
+      refresh_token: "stale-refresh",
+      adapter: :test, stubs: stubs
+    )
+
+    assert_raises MyTankInfo::RateLimitError do
+      ProtectedResource.new(client).fetch
+    end
+    assert_equal 0, auth_calls
+  end
+
   def test_request_does_not_retry_a_second_time
     protected_calls = 0
     stubs = Faraday::Adapter::Test::Stubs.new do |stub|
