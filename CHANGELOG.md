@@ -1,3 +1,7 @@
+## [1.3.0] - 2026-07-10
+- Raise `MyTankInfo::RateLimitError` (subclass of `MyTankInfo::Error`, so existing rescues keep working) on HTTP 429 instead of the generic `Error`, letting callers distinguish rate limiting from malformed requests and `retry_on` it in ActiveJob
+- Expose `RateLimitError#retry_after` - the response's `Retry-After` header normalized to seconds (supports both delay-seconds and HTTP-date forms), or nil when absent
+
 ## [1.2.0] - 2026-06-02
 - Raise `MyTankInfo::UnexpectedResponseError` (capturing the HTTP status and a truncated response body) when the API returns an unexpected status code or a non-JSON body, instead of letting the raw string flow downstream and surface as an opaque `NoMethodError`
 

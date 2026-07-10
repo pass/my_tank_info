@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "time"
+
 module MyTankInfo
   class Resource
     attr_reader :client
@@ -61,6 +63,22 @@ module MyTankInfo
       client.with_auth_retry(&block)
     end
 
+    # Retry-After is either delay-seconds or an HTTP-date; normalize both to
+    # seconds so callers can back off without parsing headers themselves.
+    def parse_retry_after(response)
+      value = response.headers["Retry-After"]
+      return if value.nil? || value.to_s.strip.empty?
+
+      if /\A\d+\z/.match?(value.to_s.strip)
+        value.to_i
+      else
+        seconds = (Time.httpdate(value) - Time.now).ceil
+        seconds.negative? ? 0 : seconds
+      end
+    rescue ArgumentError
+      nil
+    end
+
     def handle_response(response)
       message = response.body
 
@@ -83,7 +101,10 @@ module MyTankInfo
       when 404
         raise NotFoundError, "This resource could not be found - #{message}"
       when 429
-        raise Error, "Your request exceeded the API rate limit - #{message}"
+        raise RateLimitError.new(
+          "Your request exceeded the API rate limit - #{message}",
+          retry_after: parse_retry_after(response)
+        )
       when 500
         if message.to_s.downcase.include?("datareader")
           raise DataReaderError, message

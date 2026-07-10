@@ -92,6 +92,7 @@ module MyTankInfo
   autoload :InternalServerError, "my_tank_info/errors/internal_server_error"
   autoload :MissingRequiredAttributeError, "my_tank_info/errors/missing_required_attribute_error"
   autoload :NotFoundError, "my_tank_info/errors/not_found_error"
+  autoload :RateLimitError, "my_tank_info/errors/rate_limit_error"
   autoload :RequestForbiddenError, "my_tank_info/errors/request_forbidden_error"
   autoload :UnauthorizedError, "my_tank_info/errors/unauthorized_error"
   autoload :UnexpectedResponseError, "my_tank_info/errors/unexpected_response_error"
