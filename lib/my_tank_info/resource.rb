@@ -111,6 +111,15 @@ module MyTankInfo
         else
           raise InternalServerError, "We were unable to perform the request due to server-side problems - #{message}"
         end
+      when 502, 503, 504
+        # Gateway-level failures — the request never reached the API's
+        # application tier (bodies are typically raw IIS HTML error pages
+        # during brief outage windows). Transient by nature, so callers can
+        # retry or discard rather than treating them as unexpected.
+        raise ServiceUnavailableError.new(
+          "The service is temporarily unavailable (HTTP #{response.status}) - #{MyTankInfo.truncate_error_body(message)}",
+          status: response.status
+        )
       else
         # Any other status is one we don't expect from the API. Faraday isn't
         # configured to raise on these, and its JSON middleware only parses

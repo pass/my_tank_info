@@ -94,6 +94,7 @@ module MyTankInfo
   autoload :NotFoundError, "my_tank_info/errors/not_found_error"
   autoload :RateLimitError, "my_tank_info/errors/rate_limit_error"
   autoload :RequestForbiddenError, "my_tank_info/errors/request_forbidden_error"
+  autoload :ServiceUnavailableError, "my_tank_info/errors/service_unavailable_error"
   autoload :UnauthorizedError, "my_tank_info/errors/unauthorized_error"
   autoload :UnexpectedResponseError, "my_tank_info/errors/unexpected_response_error"
 end

@@ -1,3 +1,6 @@
+## [1.4.0] - 2026-07-13
+- Raise `MyTankInfo::ServiceUnavailableError` (subclass of `MyTankInfo::Error`) on HTTP 502/503/504 instead of `UnexpectedResponseError`, so callers can treat gateway-level outages as transient (retry/discard) rather than unexpected. `#status` exposes the HTTP status code
+
 ## [1.3.0] - 2026-07-10
 - Raise `MyTankInfo::RateLimitError` (subclass of `MyTankInfo::Error`, so existing rescues keep working) on HTTP 429 instead of the generic `Error`, letting callers distinguish rate limiting from malformed requests and `retry_on` it in ActiveJob
 - Expose `RateLimitError#retry_after` - the response's `Retry-After` header normalized to seconds (supports both delay-seconds and HTTP-date forms), or nil when absent
