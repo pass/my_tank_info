@@ -21,6 +21,15 @@ class SensorStatusResultTest < Minitest::Test
     refute MyTankInfo::SensorStatusResult.new({ status: "Sensor Setup Data Warning" }).passing?
   end
 
+  def test_not_passing_for_negated_normal_status_text
+    # Never observed from MyTI, but a substring match on "normal" would
+    # score these as passing — guard the false-pass direction.
+    refute MyTankInfo::SensorStatusResult.new({ status: "Sensor Abnormal" }).passing?
+    refute MyTankInfo::SensorStatusResult.new({ status: "Not Normal" }).passing?
+    refute MyTankInfo::SensorStatusResult.new({ status: "Sensor Non-Normal" }).passing?
+    refute MyTankInfo::SensorStatusResult.new({ status: "abnormal" }).passing?
+  end
+
   def test_not_passing_when_status_blank
     refute MyTankInfo::SensorStatusResult.new({ status: nil }).passing?
     refute MyTankInfo::SensorStatusResult.new({}).passing?
