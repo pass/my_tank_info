@@ -47,6 +47,8 @@ class PollDevicesResourceTest < Minitest::Test
     assert_equal "356938035643809", device.imei
     assert_equal "Active", device.lattigo_state
     assert device.link_up?
+    assert_equal "IFD00000031", device.to_h["system_id"]
+    assert_equal "356938035643809", device.to_h["imei"]
     assert_equal Time.parse("2026-09-09T14:05:12.0000000+00:00"), device.link_last_checked_at
     assert_equal Time.parse("2026-09-09T13:59:44.0000000+00:00"), device.rms_last_connected_at
   end
