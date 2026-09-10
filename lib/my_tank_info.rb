@@ -56,7 +56,7 @@ module MyTankInfo
   autoload :NotificationRule, "my_tank_info/objects/notification_rule"
   autoload :NotificationCode, "my_tank_info/objects/notification_code"
   autoload :NotificationRuleContact, "my_tank_info/objects/notification_rule_contact"
-  autoload :Device, "my_tank_info/objects/poll_device"
+  autoload :Device, "my_tank_info/objects/device"
 
   autoload :ActiveAlarmsResource, "my_tank_info/resources/active_alarms"
   autoload :AlarmHistoryResource, "my_tank_info/resources/alarm_history"
