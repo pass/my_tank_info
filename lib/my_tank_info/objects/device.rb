@@ -5,7 +5,7 @@ require "time"
 module MyTankInfo
   # Comm device + polling endpoint configuration for a site. The bulk
   # endpoint returns one row per device, so a site may appear more than once.
-  class PollDevice < Object
+  class Device < Object
     def link_up?
       link_status.to_s.casecmp("up").zero?
     end

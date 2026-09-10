@@ -2,20 +2,20 @@
 
 require "test_helper"
 
-class PollDevicesResourceTest < Minitest::Test
+class DevicesResourceTest < Minitest::Test
   def test_list
     stub =
       stub_request(
         "api/admin/polldevices",
-        response: stub_response(fixture: "poll_devices/list")
+        response: stub_response(fixture: "devices/list")
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    results = client.poll_devices.list
+    results = client.devices.list
 
     assert_equal MyTankInfo::Collection, results.class
     assert_equal 2, results.size
-    assert_equal MyTankInfo::PollDevice, results.data.first.class
+    assert_equal MyTankInfo::Device, results.data.first.class
 
     up, down = results.data
     assert_equal SITE_ID, up.site_id
@@ -32,13 +32,13 @@ class PollDevicesResourceTest < Minitest::Test
     stub =
       stub_request(
         "api/admin/#{SITE_ID}/polldevice",
-        response: stub_response(fixture: "poll_devices/retrieve")
+        response: stub_response(fixture: "devices/retrieve")
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    device = client.poll_devices.retrieve(site_id: SITE_ID)
+    device = client.devices.retrieve(site_id: SITE_ID)
 
-    assert_equal MyTankInfo::PollDevice, device.class
+    assert_equal MyTankInfo::Device, device.class
     assert_equal SITE_ID, device.site_id
     assert_equal SITEGROUP_ID, device.site_group_id
     assert_equal "TLS-450", device.system_id
@@ -61,7 +61,7 @@ class PollDevicesResourceTest < Minitest::Test
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
 
     assert_raises MyTankInfo::RequestForbiddenError do
-      client.poll_devices.retrieve(site_id: SITE_ID)
+      client.devices.retrieve(site_id: SITE_ID)
     end
   end
 
@@ -75,7 +75,7 @@ class PollDevicesResourceTest < Minitest::Test
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
 
     assert_raises MyTankInfo::NotFoundError do
-      client.poll_devices.retrieve(site_id: SITE_ID)
+      client.devices.retrieve(site_id: SITE_ID)
     end
   end
 end

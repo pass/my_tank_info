@@ -98,8 +98,8 @@ module MyTankInfo
       NotificationRulesResource.new(self)
     end
 
-    def poll_devices
-      PollDevicesResource.new(self)
+    def devices
+      DevicesResource.new(self)
     end
 
     def sites
