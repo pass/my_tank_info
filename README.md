@@ -266,6 +266,22 @@ client.notification_contacts.create(**params)
 client.notification_contacts.delete(contact_id: 1)
 ```
 
+#### Devices
+Comm device and polling endpoint configuration (system_id, IP, port, link status,
+cellular/RMS details). Requires the FullAdmin role.
+```ruby
+# Bulk: one row per device across all sites the caller can see
+client.devices.list
+
+# Single site
+device = client.devices.retrieve(site_id: 1)
+device.ip                    # => "10.20.30.40"
+device.port                  # => 10001
+device.link_up?              # => true when link_status is "Up"
+device.link_last_checked_at  # => Time
+device.rms_last_connected_at # => Time or nil
+```
+
 #### Notification Rules
 ```ruby
 # Provides a list of all alarm/warning codes that rules can be defined for

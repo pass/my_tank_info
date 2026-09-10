@@ -98,6 +98,10 @@ module MyTankInfo
       NotificationRulesResource.new(self)
     end
 
+    def devices
+      DevicesResource.new(self)
+    end
+
     def sites
       SitesResource.new(self)
     end

@@ -56,6 +56,7 @@ module MyTankInfo
   autoload :NotificationRule, "my_tank_info/objects/notification_rule"
   autoload :NotificationCode, "my_tank_info/objects/notification_code"
   autoload :NotificationRuleContact, "my_tank_info/objects/notification_rule_contact"
+  autoload :Device, "my_tank_info/objects/device"
 
   autoload :ActiveAlarmsResource, "my_tank_info/resources/active_alarms"
   autoload :AlarmHistoryResource, "my_tank_info/resources/alarm_history"
@@ -82,6 +83,7 @@ module MyTankInfo
 
   autoload :NotificationContactsResource, "my_tank_info/resources/notification_contacts"
   autoload :NotificationRulesResource, "my_tank_info/resources/notification_rules"
+  autoload :DevicesResource, "my_tank_info/resources/devices"
 
   autoload :TokensResource, "my_tank_info/resources/tokens"
   autoload :AuthTokensResource, "my_tank_info/resources/auth_tokens"
