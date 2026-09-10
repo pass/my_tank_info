@@ -266,18 +266,19 @@ client.notification_contacts.create(**params)
 client.notification_contacts.delete(contact_id: 1)
 ```
 
-#### Devices
+#### Poll Devices
 Comm device and polling endpoint configuration (system_id, IP, port, link status,
-cellular/RMS details). Requires the FullAdmin role.
+cellular/RMS details) from the admin `polldevice` endpoints. Requires the FullAdmin role.
+`system_id` matches the Network Status Monitor's site ID; `ip`/`port` is the endpoint it probes.
 ```ruby
 # Bulk: one row per device across all sites the caller can see
-client.devices.list
+client.poll_devices.list
 
 # Single site
-device = client.devices.retrieve(site_id: 1)
+device = client.poll_devices.retrieve(site_id: 1)
 device.ip                    # => "10.20.30.40"
 device.port                  # => 10001
-device.link_up?              # => true when link_status is "Up"
+device.link_up?              # => true when link_status is "UP"
 device.link_last_checked_at  # => Time
 device.rms_last_connected_at # => Time or nil
 ```
