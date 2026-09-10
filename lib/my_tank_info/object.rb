@@ -19,5 +19,12 @@ module MyTankInfo
     def respond_to_missing?(method, include_private = false)
       true
     end
+
+    # The parsed attributes with string keys, for callers that want to
+    # persist the payload as received. Defined explicitly because
+    # method_missing would otherwise answer to_h with nil.
+    def to_h
+      @attributes.transform_keys(&:to_s)
+    end
   end
 end
