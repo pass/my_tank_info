@@ -11,6 +11,7 @@ module MyTankInfo
     # feeds the totals. Keep only the records that start inside the requested
     # range, which is what the legacy host returned.
     def list(site_id:, reconciliation_period:, **params)
+      params = params.transform_keys(&:to_sym)
       response = get_request("api/recon/sites/#{site_id}", params: params)
       records = response.body.map { |attrs| TankReconciliationRecord.new(attrs) }
 
