@@ -28,6 +28,49 @@ class TankReconciliationResultsResourceTest < Minitest::Test
     assert_equal records.data.max_by(&:started_at).started_at, records.ended_at
   end
 
+  # The fixture holds 10 days (2021-09-05 to 2021-09-14, 5 tanks a day). A
+  # request for the last 9 of them must not keep the 09-05 records, even
+  # though the API returns them because their period ends inside the range.
+  def test_list_drops_records_that_start_outside_the_requested_range
+    stub =
+      stub_request(
+        "/api/recon/sites/#{SITE_ID}",
+        response: stub_response(fixture: "tank_reconciliation_results/list")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    records = client.tank_reconciliation_records.list(
+      site_id: SITE_ID,
+      reconciliation_period: :ten_day,
+      report_start_date: "2021-09-06T00:00:00-05:00",
+      report_end_date: "2021-09-14T23:59:59-05:00"
+    )
+
+    assert_equal 45, records.size
+    assert_equal Time.parse("2021-09-06T02:00:00-05:00"), records.started_at
+    assert_equal Time.parse("2021-09-14T02:00:00-05:00"), records.ended_at
+  end
+
+  # Rails callers splat permitted params in, which arrive with string keys.
+  def test_list_reads_the_requested_range_from_string_keys
+    stub =
+      stub_request(
+        "/api/recon/sites/#{SITE_ID}",
+        response: stub_response(fixture: "tank_reconciliation_results/list")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    records = client.tank_reconciliation_records.list(
+      site_id: SITE_ID,
+      reconciliation_period: :ten_day,
+      "report_start_date" => "2021-09-06T00:00:00-05:00",
+      "report_end_date" => "2021-09-13T23:59:59-05:00"
+    )
+
+    assert_equal 40, records.size
+    assert_equal Time.parse("2021-09-13T02:00:00-05:00"), records.ended_at
+  end
+
   def test_retrieve
     date = "2021-09-14T02:00:00.0000000-05:00"
     stub =
