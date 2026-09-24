@@ -1,0 +1,7 @@
+{
+  "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+  "title": "Not Found",
+  "status": 404,
+  "detail": "No poll device with system_id IFD00000099 at site 1489",
+  "instance": "/api/admin/1489/polldevice"
+}

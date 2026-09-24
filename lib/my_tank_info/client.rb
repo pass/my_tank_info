@@ -122,7 +122,7 @@ module MyTankInfo
       @connection ||= Faraday.new do |conn|
         conn.url_prefix = @base_url
         conn.request :json
-        conn.response :json, content_type: "application/json"
+        conn.response :json, content_type: ["application/json", "application/problem+json"]
         conn.options.timeout = @timeout if @timeout
         conn.options.open_timeout = @open_timeout if @open_timeout
         conn.adapter @adapter, @stubs

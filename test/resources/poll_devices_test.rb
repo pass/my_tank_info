@@ -80,4 +80,49 @@ class PollDevicesResourceTest < Minitest::Test
       client.poll_devices.retrieve(site_id: SITE_ID)
     end
   end
+
+  def test_update
+    body = {system_id: "IFD00000031", target_type: "Name", host: "ifd31-new.site.acumera.net", port: 10002}
+
+    stub =
+      stub_request(
+        "api/admin/#{SITE_ID}/polldevice",
+        method: :put,
+        body: body,
+        response: stub_response(fixture: "poll_devices/update")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    device = client.poll_devices.update(site_id: SITE_ID, **body)
+
+    assert_equal MyTankInfo::PollDevice, device.class
+    assert_equal "Updated", device.status
+    assert_equal "IFD00000031", device.system_id
+    assert_equal "Name", device.target_type
+    assert_equal "ifd31-new.site.acumera.net", device.host
+    assert_equal 10002, device.port
+  end
+
+  def test_update_not_found_uses_problem_detail
+    body = {system_id: "IFD00000099", target_type: "IP", host: "10.0.0.5", port: 10001}
+
+    stub =
+      stub_request(
+        "api/admin/#{SITE_ID}/polldevice",
+        method: :put,
+        body: body,
+        response: stub_response(
+          fixture: "poll_devices/update_not_found",
+          status: 404,
+          headers: {"Content-Type" => "application/problem+json; charset=utf-8"}
+        )
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    error = assert_raises MyTankInfo::NotFoundError do
+      client.poll_devices.update(site_id: SITE_ID, **body)
+    end
+    assert_equal "This resource could not be found - No poll device with system_id IFD00000099 at site 1489", error.message
+  end
 end
