@@ -1,3 +1,7 @@
+## [Unreleased]
+- Add `client.poll_devices.update(site_id:, **attributes)` for `PUT api/admin/{siteId}/polldevice`, which changes where MyTankInfo polls a site's device
+- Parse `application/problem+json` error bodies and use their `detail` (or `title`) as the error message
+
 ## [1.4.0] - 2026-07-13
 - Raise `MyTankInfo::ServiceUnavailableError` (subclass of `MyTankInfo::Error`) on HTTP 502/503/504 instead of `UnexpectedResponseError`, so callers can treat gateway-level outages as transient (retry/discard) rather than unexpected. `#status` exposes the HTTP status code
 

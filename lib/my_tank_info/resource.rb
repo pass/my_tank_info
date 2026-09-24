@@ -84,7 +84,10 @@ module MyTankInfo
 
       message =
         if message.is_a?(Array)
-          message = message.join(". ")
+          message.join(". ")
+        elsif message.is_a?(Hash) && (message["detail"] || message["title"])
+          # RFC 7807 problem details (the newer admin endpoints)
+          message["detail"] || message["title"]
         else
           message
         end

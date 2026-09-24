@@ -14,5 +14,14 @@ module MyTankInfo
     def retrieve(site_id:)
       PollDevice.new get_request("api/admin/#{site_id}/polldevice").body
     end
+
+    # Changes where MyTankInfo polls a site's device. Attributes are
+    # system_id, target_type ("IP" or "Name"), host, and port; system_id must
+    # match a device at the site. MyTankInfo's VPN server picks up the change
+    # within 5 minutes.
+    def update(site_id:, **attributes)
+      request = put_request("api/admin/#{site_id}/polldevice", body: attributes)
+      PollDevice.new request.body
+    end
   end
 end
