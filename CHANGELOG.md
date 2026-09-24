@@ -1,5 +1,5 @@
 ## [Unreleased]
-- Add `client.poll_devices.update(site_id:, system_id:, target_type:, host:, port:)` for `PUT api/admin/{siteId}/polldevice`, which changes where MyTankInfo polls a site's device
+- Add `client.poll_devices.update(site_id:, **attributes)` for `PUT api/admin/{siteId}/polldevice`, which changes where MyTankInfo polls a site's device
 - Parse `application/problem+json` error bodies and use their `detail` (or `title`) as the error message
 
 ## [1.4.0] - 2026-07-13
