@@ -1,4 +1,5 @@
 ## [Unreleased]
+- Add `TankReconciliationRecord#date`, the calendar day a record mostly covers (the day its midpoint falls on), and `TankReconciliationRecordCollection#starts_on`/`#ends_on`. `tank_reconciliation_records.list` now keeps the records whose `date` falls inside the requested dates, so a site that closes out before midnight no longer gets an extra day at the end of each period
 - Add `client.poll_devices.update(site_id:, **attributes)` for `PUT api/admin/{siteId}/polldevice`, which changes where MyTankInfo polls a site's device
 - Parse `application/problem+json` error bodies and use their `detail` (or `title`) as the error message
 

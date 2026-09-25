@@ -8,15 +8,18 @@ module MyTankInfo
     # inside report_start_date..report_end_date. The record that ended the
     # moment the requested period began (the last day of the previous period)
     # comes back too, so a 10-day request returns 11 days and the extra day
-    # feeds the totals. Keep only the records that start inside the requested
-    # range, which is what the legacy host returned.
+    # feeds the totals. Keep only the records whose day (see
+    # TankReconciliationRecord#date) falls inside the requested dates. Filtering
+    # on the start time is not enough: a site that closes out before midnight
+    # starts each day the evening before, so the record for the day after the
+    # period also starts inside it.
     def list(site_id:, reconciliation_period:, **params)
       params = params.transform_keys(&:to_sym)
       response = get_request("api/recon/sites/#{site_id}", params: params)
       records = response.body.map { |attrs| TankReconciliationRecord.new(attrs) }
 
       TankReconciliationRecordCollection.new(
-        data: records_starting_within(records, params[:report_start_date], params[:report_end_date]),
+        data: records_dated_within(records, params[:report_start_date], params[:report_end_date]),
         reconciliation_period: reconciliation_period
       )
     end
@@ -49,13 +52,13 @@ module MyTankInfo
 
     private
 
-    def records_starting_within(records, report_start_date, report_end_date)
-      starts_at = Time.parse(report_start_date.to_s) if report_start_date
-      ends_at = Time.parse(report_end_date.to_s) if report_end_date
+    def records_dated_within(records, report_start_date, report_end_date)
+      starts_on = Time.parse(report_start_date.to_s).to_date if report_start_date
+      ends_on = Time.parse(report_end_date.to_s).to_date if report_end_date
 
       records.select do |record|
-        (starts_at.nil? || record.started_at >= starts_at) &&
-          (ends_at.nil? || record.started_at <= ends_at)
+        (starts_on.nil? || record.date >= starts_on) &&
+          (ends_on.nil? || record.date <= ends_on)
       end
     end
   end
