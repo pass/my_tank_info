@@ -3,7 +3,7 @@
 module MyTankInfo
   class TankReconciliationRecordCollection
     attr_reader :data, :size, :site_id, :reconciliation_period, :started_at, :ended_at,
-      :volume_uom, :height_uom
+      :starts_on, :ends_on, :volume_uom, :height_uom
 
     def self.from_response(response, reconciliation_period:)
       body = response.body
@@ -23,6 +23,8 @@ module MyTankInfo
       @site_id = @data.first&.site_id
       @started_at = @data.min_by(&:started_at)&.started_at
       @ended_at = @data.max_by(&:started_at)&.started_at
+      @starts_on = @data.map(&:date).min
+      @ends_on = @data.map(&:date).max
 
       @volume_uom = @data.first&.volume_uom
       @height_uom = @data.first&.height_uom

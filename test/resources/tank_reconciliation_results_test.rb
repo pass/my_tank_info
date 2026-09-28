@@ -71,6 +71,30 @@ class TankReconciliationResultsResourceTest < Minitest::Test
     assert_equal Time.parse("2021-09-13T02:00:00-05:00"), records.ended_at
   end
 
+  # One tank at a site whose closeout moved from just after midnight to
+  # 11:51 PM on 10 Sep. Its 4 to 13 Sep request returns 11 records: the last
+  # one starts 13 Sep 23:51 but covers the 14th, and must be dropped.
+  def test_list_dates_records_by_the_day_they_mostly_cover
+    stub =
+      stub_request(
+        "/api/recon/sites/#{SITE_ID}",
+        response: stub_response(fixture: "tank_reconciliation_results/list_evening_closeout")
+      )
+
+    client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    records = client.tank_reconciliation_records.list(
+      site_id: SITE_ID,
+      reconciliation_period: :ten_day,
+      report_start_date: "2026-09-04T00:00:00-04:00",
+      report_end_date: "2026-09-13T23:59:59-04:00"
+    )
+
+    assert_equal (Date.new(2026, 9, 4)..Date.new(2026, 9, 13)).to_a, records.data.map(&:date)
+    assert_equal Date.new(2026, 9, 4), records.starts_on
+    assert_equal Date.new(2026, 9, 13), records.ends_on
+    assert_equal 133, records.data.find { _1.date == Date.new(2026, 9, 12) }.sales_volume
+  end
+
   def test_retrieve
     date = "2021-09-14T02:00:00.0000000-05:00"
     stub =
