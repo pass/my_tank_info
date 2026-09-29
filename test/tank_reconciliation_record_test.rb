@@ -21,10 +21,16 @@ class TankReconciliationRecordTest < Minitest::Test
     assert_equal Date.new(2026, 9, 10), record.date
   end
 
-  def test_date_falls_back_to_the_start_day_without_an_end
+  def test_date_of_a_multi_day_outage_is_the_day_it_starts
+    record = build(starts: "2026-02-17T00:43:00.0000000-05:00", ends: "2026-03-26T12:39:00.0000000-04:00")
+
+    assert_equal Date.new(2026, 2, 17), record.date
+  end
+
+  def test_date_of_an_evening_start_without_an_end_is_the_next_day
     record = build(starts: "2026-09-10T23:51:00.0000000-04:00", ends: nil)
 
-    assert_equal Date.new(2026, 9, 10), record.date
+    assert_equal Date.new(2026, 9, 11), record.date
   end
 
   private
