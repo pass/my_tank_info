@@ -20,15 +20,13 @@ module MyTankInfo
       Time.parse(end_date_time) if end_date_time
     end
 
-    # The operating day the record reconciles: the day it is on 12 hours after
-    # it starts, in the record's own offset. A record that starts before noon
-    # belongs to its start day; one that starts after noon belongs to the next.
-    # A site that closes out at 11:51 PM reports 10 Sep 23:51 to 11 Sep 23:51,
-    # which is the 11th. A site that closes out just after midnight reports the
-    # day it starts on, and so does a reading that spans a multi-day outage,
-    # so the gap stays in the period where it began.
+    # The day the record reconciles, as MyTankInfo labels it: the day it
+    # starts, in the record's own offset. When a site's closeout moves from
+    # just after midnight to the evening before, MyTankInfo merges the two
+    # records that would otherwise start on the same day, so every day still
+    # gets one record.
     def date
-      (started_at + (12 * 60 * 60)).to_date
+      started_at.to_date
     end
 
     def is_missing?

@@ -1,5 +1,5 @@
 ## [Unreleased]
-- Add `TankReconciliationRecord#date`, the operating day a record reconciles (the day it is on 12 hours after it starts, so a reading spanning a multi-day outage stays on the day it began), and `TankReconciliationRecordCollection#starts_on`/`#ends_on`. `tank_reconciliation_records.list` now keeps the records whose `date` falls inside the requested dates, so a site that closes out before midnight no longer gets an extra day at the end of each period
+- Add `TankReconciliationRecord#date`, the day a record reconciles as MyTankInfo labels it (the day it starts), and `TankReconciliationRecordCollection#starts_on`/`#ends_on`. `tank_reconciliation_records.list` keeps the records whose `date` falls inside the requested dates. When a site's closeout moves before midnight, MyTankInfo merges the two records that would start on the same day, so each day keeps one record
 - Add `client.poll_devices.update(site_id:, **attributes)` for `PUT api/admin/{siteId}/polldevice`, which changes where MyTankInfo polls a site's device
 - Parse `application/problem+json` error bodies and use their `detail` (or `title`) as the error message
 

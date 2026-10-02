@@ -74,11 +74,14 @@ class TankReconciliationResultsResourceTest < Minitest::Test
   # One tank at a site whose closeout moved from just after midnight to
   # 11:51 PM on 10 Sep. Its 4 to 13 Sep request returns 11 records: the last
   # one starts 13 Sep 23:51 but covers the 14th, and must be dropped.
-  def test_list_dates_records_by_the_day_they_mostly_cover
+  # The site's closeout moves from 00:23 to 23:51 on 10 Sep. MyTankInfo merges
+  # the short 10 Sep record into the next one, so every day keeps one record
+  # and each is dated by the day it starts, matching MyTankInfo's own screens.
+  def test_list_dates_records_by_the_day_they_start_when_closeout_moves_before_midnight
     stub =
       stub_request(
         "/api/recon/sites/#{SITE_ID}",
-        response: stub_response(fixture: "tank_reconciliation_results/list_evening_closeout")
+        response: stub_response(fixture: "tank_reconciliation_results/list_closeout_moves_before_midnight")
       )
 
     client = MyTankInfo::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -92,7 +95,8 @@ class TankReconciliationResultsResourceTest < Minitest::Test
     assert_equal (Date.new(2026, 9, 4)..Date.new(2026, 9, 13)).to_a, records.data.map(&:date)
     assert_equal Date.new(2026, 9, 4), records.starts_on
     assert_equal Date.new(2026, 9, 13), records.ends_on
-    assert_equal 133, records.data.find { _1.date == Date.new(2026, 9, 12) }.sales_volume
+    assert_equal 215, records.data.find { _1.date == Date.new(2026, 9, 10) }.sales_volume
+    assert_equal 133, records.data.find { _1.date == Date.new(2026, 9, 11) }.sales_volume
   end
 
   def test_retrieve

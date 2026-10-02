@@ -9,10 +9,7 @@ module MyTankInfo
     # moment the requested period began (the last day of the previous period)
     # comes back too, so a 10-day request returns 11 days and the extra day
     # feeds the totals. Keep only the records whose day (see
-    # TankReconciliationRecord#date) falls inside the requested dates. Filtering
-    # on the start time is not enough: a site that closes out before midnight
-    # starts each day the evening before, so the record for the day after the
-    # period also starts inside it.
+    # TankReconciliationRecord#date) falls inside the requested dates.
     def list(site_id:, reconciliation_period:, **params)
       params = params.transform_keys(&:to_sym)
       response = get_request("api/recon/sites/#{site_id}", params: params)
