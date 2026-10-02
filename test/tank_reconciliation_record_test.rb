@@ -9,16 +9,16 @@ class TankReconciliationRecordTest < Minitest::Test
     assert_equal Date.new(2026, 9, 9), record.date
   end
 
-  def test_date_is_the_next_day_when_closeout_is_before_midnight
+  def test_date_is_the_start_day_when_closeout_is_before_midnight
     record = build(starts: "2026-09-10T23:51:00.0000000-04:00", ends: "2026-09-11T23:51:00.0000000-04:00")
 
-    assert_equal Date.new(2026, 9, 11), record.date
+    assert_equal Date.new(2026, 9, 10), record.date
   end
 
-  def test_date_of_a_short_day_when_closeout_moves
-    record = build(starts: "2026-09-10T00:23:00.0000000-04:00", ends: "2026-09-10T23:51:00.0000000-04:00")
+  def test_date_of_a_merged_record_when_closeout_moves_is_the_day_it_starts
+    record = build(starts: "2026-09-23T00:29:00.0000000-04:00", ends: "2026-09-24T23:37:00.0000000-04:00")
 
-    assert_equal Date.new(2026, 9, 10), record.date
+    assert_equal Date.new(2026, 9, 23), record.date
   end
 
   def test_date_of_a_multi_day_outage_is_the_day_it_starts
@@ -27,10 +27,10 @@ class TankReconciliationRecordTest < Minitest::Test
     assert_equal Date.new(2026, 2, 17), record.date
   end
 
-  def test_date_of_an_evening_start_without_an_end_is_the_next_day
+  def test_date_of_a_record_without_an_end_is_the_day_it_starts
     record = build(starts: "2026-09-10T23:51:00.0000000-04:00", ends: nil)
 
-    assert_equal Date.new(2026, 9, 11), record.date
+    assert_equal Date.new(2026, 9, 10), record.date
   end
 
   private
