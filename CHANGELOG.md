@@ -1,4 +1,5 @@
 ## [Unreleased]
+- Cover the ATG fields MyTankInfo added to its API: `atg_type`, `atg_manufacturer` and `atg_model` on `Site` (sitegroups) and `PollDevice`, and `atg_type` on `Alarm`. Objects already expose any attribute the API returns, so these need no new code; `PollDevice#model` is still the comm gateway hardware, not the ATG
 - Add `TankReconciliationRecord#date`, the day a record reconciles as MyTankInfo labels it (the day it starts), and `TankReconciliationRecordCollection#starts_on`/`#ends_on`. `tank_reconciliation_records.list` keeps the records whose `date` falls inside the requested dates. When a site's closeout moves before midnight, MyTankInfo merges the two records that would start on the same day, so each day keeps one record
 - Add `client.poll_devices.update(site_id:, **attributes)` for `PUT api/admin/{siteId}/polldevice`, which changes where MyTankInfo polls a site's device
 - Parse `application/problem+json` error bodies and use their `detail` (or `title`) as the error message
