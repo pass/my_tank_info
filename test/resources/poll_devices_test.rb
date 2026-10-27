@@ -21,6 +21,10 @@ class PollDevicesResourceTest < Minitest::Test
     assert_equal SITE_ID, up.site_id
     assert_equal "ifd31.site.acumera.net", up.ip
     assert_equal 10001, up.port
+    assert_equal "MTIEnterprise", up.model
+    assert_equal "Veeder-Root TLS-350", up.atg_type
+    assert_equal "Veeder-Root", up.atg_manufacturer
+    assert_equal "TLS-350", up.atg_model
     assert up.link_up?
 
     assert_equal "DOWN", down.link_status

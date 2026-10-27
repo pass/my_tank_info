@@ -14,6 +14,7 @@
     "category": "Tank Alarm",
     "code": null,
     "message": "Tank Low Product Alarm",
+    "atg_type": "Veeder-Root TLS-350",
     "priority": 1,
     "acknowledged_at": null,
     "is_acknowledged": false,

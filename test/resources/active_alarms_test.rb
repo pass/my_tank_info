@@ -16,6 +16,7 @@ class ActiveAlarmsResourceTest < Minitest::Test
     assert_equal MyTankInfo::Collection, active_alarms.class
     assert_equal 2, active_alarms.size
     assert_equal MyTankInfo::Alarm, active_alarms.data.first.class
+    assert_equal "Veeder-Root TLS-350", active_alarms.data.first.atg_type
   end
 
   def test_site_list
