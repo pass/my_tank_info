@@ -23,8 +23,8 @@ class PollDevicesResourceTest < Minitest::Test
     assert_equal 10001, up.port
     assert_equal "MTIEnterprise", up.model
     assert_equal "Veeder-Root TLS-350", up.atg_type
-    assert_equal "Veeder-Root", up.atg_manufacturer
-    assert_equal "TLS-350", up.atg_model
+    assert_equal "Veeder-Root TLS350", up.atg_manufacturer
+    assert_equal "TLS350", up.atg_model
     assert up.link_up?
 
     assert_equal "DOWN", down.link_status

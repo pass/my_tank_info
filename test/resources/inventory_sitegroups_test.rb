@@ -16,7 +16,7 @@ class InventorySitegroupsResourceTest < Minitest::Test
 
     site = sitegroups.data.first.sites.first
     assert_equal "Veeder-Root TLS-350", site.atg_type
-    assert_equal "Veeder-Root", site.atg_manufacturer
-    assert_equal "TLS-350", site.atg_model
+    assert_equal "Veeder-Root TLS350", site.atg_manufacturer
+    assert_equal "TLS350", site.atg_model
   end
 end
