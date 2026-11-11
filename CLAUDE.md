@@ -9,7 +9,7 @@ bundle install
 rake test  # or: bundle exec rake
 ```
 
-Ruby 3.0+, tests via Minitest.
+Ruby 4.0+, tests via Minitest.
 
 ## Structure
 
