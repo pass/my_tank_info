@@ -7,7 +7,7 @@ module MyTankInfo
       # this ensures that when names are provided in camelcase (BeginDateTime)
       # they are converted to snake_case (begin_date_time)
       @original_attributes = attributes
-      @attributes = (attributes || {}).transform_keys { |key| key.to_s.underscore.to_sym }
+      @attributes = without_null_bytes(attributes || {}).transform_keys { |key| key.to_s.underscore.to_sym }
     end
 
     def method_missing(method, *args, &block)
@@ -25,6 +25,19 @@ module MyTankInfo
     # method_missing would otherwise answer to_h with nil.
     def to_h
       @attributes.transform_keys(&:to_s)
+    end
+
+    private
+
+    # MyTankInfo passes ATG text through as-is, and some ATGs pad it with NUL
+    # bytes, which Postgres text columns reject.
+    def without_null_bytes(value)
+      case value
+      when String then value.delete("\0")
+      when Hash then value.transform_values { |v| without_null_bytes(v) }
+      when Array then value.map { |v| without_null_bytes(v) }
+      else value
+      end
     end
   end
 end
